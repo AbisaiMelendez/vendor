@@ -1,0 +1,7 @@
+<?php 
+
+
+require 'router.php';
+
+
+?>
