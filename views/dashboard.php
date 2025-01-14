@@ -1,4 +1,4 @@
-<h3 class="text-xl font-bold mb-2">Dashboard</h3>
+<h3 class="text-xl font-bold mb-2 mt-12">Dashboard</h3>
 
 
 <div class="bg-gray-200 rounded-lg w-full">

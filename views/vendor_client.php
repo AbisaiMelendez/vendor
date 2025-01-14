@@ -18,13 +18,13 @@ $nameVendor = isset($_SESSION['user']['name_vendor']) ? $_SESSION['user']['name_
 ?>
 
 
-<h2 class="text-xl font-bold mb-4">Vendor Client</h2>
+<h2 class="text-xl font-bold mb-4 mt-12">Vendor Client</h2>
 
 <!DOCTYPE html>
 <html>
 
 <head>
-    <title>Glass Mountain BPO</title>
+    <title>Surgepays</title>
 </head>
 
 
@@ -154,7 +154,7 @@ $employeeJson = json_encode($dataEmployee);
 
 ?>
 
-<body class="bg-red-800">
+<body class="bg-red-800 ">
     <header class="bg-indigo-900 text-white px-5 py-4 flex justify-between items-center rounded-lg shadow-lg">
         <div>
             <h1 class="text-xl font-bold">Surgepays</h1>

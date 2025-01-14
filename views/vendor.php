@@ -96,7 +96,7 @@ include '../vendor/models/list-vendors.php';
 
 <body>
     <div id="transaccionesTable_wrapper">
-        <div class="mb-4">
+        <div class="mb-4 ">
             <h1 class="text-2xl mt-8 mb-8 font-semibold">List vendors</h1>
         </div>
 

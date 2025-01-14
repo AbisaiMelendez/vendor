@@ -1,10 +1,6 @@
-
 <?php
 
-
-
-
-
+include '../vendor/models/notificacions.php';
 
 ?>
 <!DOCTYPE html>
@@ -39,13 +35,13 @@
 
     <!-- Sidebar -->
     <div id="sidebar" class="relative w-52 bg-gradient-to-b from-gray-900 to-black text-indigo-100 font-semibold text-sm hidden md:block">
-    <div class="flex p-6 font-bold text-sm"> 
-        <img class="w-full mb-14" src="https://surgesetup.com/img/SurgePays_Logo_.png" />
-    </div>
+        <div class="flex p-6 font-bold text-sm">
+            <img class="w-full mb-14" src="https://surgesetup.com/img/SurgePays_Logo_.png" />
+        </div>
 
-    <div class="flex flex-col mt-24 relative z-10 ml-6">
-        <nav class="space-y-7">
-            <?php
+        <div class="flex flex-col mt-24 relative z-10 ml-6">
+            <nav class="space-y-7">
+                <?php
 
                 // print_r($_SESSION);
                 $idUSER = $_SESSION['user']['userId'];
@@ -53,57 +49,63 @@
 
 
                 if ($levelUSER == '2') {
-            ?>
-            <a href="?page=transaction" class="flex items-center py-2 px-4 hover:bg-indigo-900 hover:text-white">
-                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 mr-3">
-                    <path stroke-linecap="round" stroke-linejoin="round" d="M6.429 9.75 2.25 12l4.179 2.25m0-4.5 5.571 3 5.571-3m-11.142 0L2.25 7.5 12 2.25l9.75 5.25-4.179 2.25m0 0L21.75 12l-4.179 2.25m0 0 4.179 2.25L12 21.75 2.25 16.5l4.179-2.25m11.142 0-5.571 3-5.571-3" />
-                </svg>
-                <span>Transaction</span>
-            </a>
-            <a href="?page=report" class="flex items-center py-2 px-4 hover:bg-indigo-900 hover:text-white">
-                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 mr-3">
-                    <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 14.25v-2.625a3.375 3.375 0 0 0-3.375-3.375h-1.5A1.125 1.125 0 0 1 13.5 7.125v-1.5a3.375 3.375 0 0 0-3.375-3.375H8.25m0 12.75h7.5m-7.5 3H12M10.5 2.25H5.625c-.621 0-1.125.504-1.125 1.125v17.25c0 .621.504 1.125 1.125 1.125h12.75c.621 0 1.125-.504 1.125-1.125V11.25a9 9 0 0 0-9-9Z" />
-                </svg>
-                <span>Report</span>
-            </a>
-            <a href="?page=vendor_client" class="flex items-center py-2 px-4 hover:bg-indigo-900 hover:text-white">
-                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 mr-3">
-                    <path stroke-linecap="round" stroke-linejoin="round" d="M12 7.5h1.5m-1.5 3h1.5m-7.5 3h7.5m-7.5 3h7.5m3-9h3.375c.621 0 1.125.504 1.125 1.125V18a2.25 2.25 0 0 1-2.25 2.25M16.5 7.5V18a2.25 2.25 0 0 0 2.25 2.25M16.5 7.5V4.875c0-.621-.504-1.125-1.125-1.125H4.125C3.504 3.75 3 4.254 3 4.875V18a2.25 2.25 0 0 0 2.25 2.25h13.5M6 7.5h3v3H6v-3Z" />
-                </svg>
-                <span>Vendor Client</span>
-            </a>
-            <?php
+                ?>
+                    <a href="?page=transaction" class="flex items-center py-2 px-4 hover:bg-indigo-900 hover:text-white">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 mr-3">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M6.429 9.75 2.25 12l4.179 2.25m0-4.5 5.571 3 5.571-3m-11.142 0L2.25 7.5 12 2.25l9.75 5.25-4.179 2.25m0 0L21.75 12l-4.179 2.25m0 0 4.179 2.25L12 21.75 2.25 16.5l4.179-2.25m11.142 0-5.571 3-5.571-3" />
+                        </svg>
+                        <span>Transaction</span>
+                    </a>
+                    <a href="?page=report" class="flex items-center py-2 px-4 hover:bg-indigo-900 hover:text-white">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 mr-3">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 14.25v-2.625a3.375 3.375 0 0 0-3.375-3.375h-1.5A1.125 1.125 0 0 1 13.5 7.125v-1.5a3.375 3.375 0 0 0-3.375-3.375H8.25m0 12.75h7.5m-7.5 3H12M10.5 2.25H5.625c-.621 0-1.125.504-1.125 1.125v17.25c0 .621.504 1.125 1.125 1.125h12.75c.621 0 1.125-.504 1.125-1.125V11.25a9 9 0 0 0-9-9Z" />
+                        </svg>
+                        <span>Report</span>
+                    </a>
+                    <a href="?page=vendor_client" class="flex items-center py-2 px-4 hover:bg-indigo-900 hover:text-white">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 mr-3">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M12 7.5h1.5m-1.5 3h1.5m-7.5 3h7.5m-7.5 3h7.5m3-9h3.375c.621 0 1.125.504 1.125 1.125V18a2.25 2.25 0 0 1-2.25 2.25M16.5 7.5V18a2.25 2.25 0 0 0 2.25 2.25M16.5 7.5V4.875c0-.621-.504-1.125-1.125-1.125H4.125C3.504 3.75 3 4.254 3 4.875V18a2.25 2.25 0 0 0 2.25 2.25h13.5M6 7.5h3v3H6v-3Z" />
+                        </svg>
+                        <span>Vendor Client</span>
+                    </a>
+                <?php
                 } else {
-            ?>
-            <a href="?page=dashboard" class="flex items-center py-2 px-4 hover:bg-indigo-900 hover:text-white">
-                <span>Dashboard</span>
-            </a>
-            <a href="?page=vendor" class="flex items-center py-2 px-4 hover:bg-indigo-900 hover:text-white">
-                <span>Vendor</span>
-            </a>
-            <a href="?page=transaction" class="flex items-center py-2 px-4 hover:bg-indigo-900 hover:text-white">
-                <span>Transaction</span>
-            </a>
-            <a href="?page=report" class="flex items-center py-2 px-4 hover:bg-indigo-900 hover:text-white">
-                <span>Report</span>
-            </a>
-            <a href="?page=vendor_client" class="flex items-center py-2 px-4 hover:bg-indigo-900 hover:text-white">
-                <span>Vendor Client</span>
-            </a>
-            <a href="?page=user" class="flex items-center py-2 px-4 hover:bg-indigo-900 hover:text-white">
-                <span>Users</span>
-            </a>
-            <?php
+                ?>
+                    <a href="?page=dashboard" class="flex items-center py-2 px-4 hover:bg-indigo-900 hover:text-white">
+                        <span>Dashboard</span>
+                    </a>
+                    <a href="?page=vendor" class="flex items-center py-2 px-4 hover:bg-indigo-900 hover:text-white">
+                        <span>Vendor</span>
+                    </a>
+                    <a href="?page=transaction" class="flex items-center py-2 px-4 hover:bg-indigo-900 hover:text-white">
+                        <span>Transaction</span>
+                    </a>
+                    <a href="?page=report" class="flex items-center py-2 px-4 hover:bg-indigo-900 hover:text-white">
+                        <span>Report</span>
+                    </a>
+                    <a href="?page=vendor_client" class="flex items-center py-2 px-4 hover:bg-indigo-900 hover:text-white">
+                        <span>Vendor Client</span>
+                    </a>
+                    <a href="?page=user" class="flex items-center py-2 px-4 hover:bg-indigo-900 hover:text-white">
+                        <span>Users</span>
+                    </a>
+                <?php
                 }
-            ?>
-        </nav>
+                ?>
+            </nav>
+        </div>
     </div>
-</div>
 
 
 
     <!-- Content Wrapper -->
     <div class="flex-1">
+        <?php
+
+        include '../vendor/models/notificacions.php';
+
+
+        ?>
         <div class="bg-gradient-to-r from-gray-800 to-gray-700 p-4 flex justify-between items-center">
             <h1 class="text-sm text-gray-500"><a href="#">
                     <i class="fas fa-clock"></i>
@@ -121,11 +123,28 @@
                     </button>
                     <div
                         id="notificationsDropdown"
-                        class="hidden absolute top-72 right-0 mt-2 w-48 bg-gray-700 text-white rounded-lg shadow-lg p-4 z-50"
+                        class="hidden absolute top-36 right-0 mt-4 w-48 bg-gray-700 text-white rounded-lg shadow-lg p-4 z-50"
                         style="transform: translateY(-100%);">
-                        <p class="text-sm text-gray-400 p-4 hover:text-white">No tienes nuevas notificaciones</p>
-                        <p class="text-sm text-gray-400 p-4 hover:text-white">No tienes nuevas notificaciones</p>
-                        <p class="text-sm text-gray-400 p-4 hover:text-white">No tienes nuevas notificaciones</p>
+                        <?php
+                        // Inicializar $notifications como un array vacío si no está definido
+                        $level = $_SESSION['user']['level'];
+                        if ($level == 1) {
+                            $notifications = $notifications ?? [];
+                            if (!empty($notificationData)) {
+                                foreach ($notificationData as $item) {
+                                    echo '<p class="text-sm text-gray-400 p-4 hover:text-white">Estado ' . htmlspecialchars($item['status']) . ' (' . htmlspecialchars($item['total']) . ')</p>';
+                                }
+                            } else {
+                                echo '<p class="text-sm text-gray-400 p-4 hover:text-white">No tienes nuevas notificaciones</p>';
+                            }
+                        } else {
+                            echo '<p class="text-sm text-gray-400 p-4 hover:text-white">No tienes nuevas notificaciones</p>';
+                        }
+                        ?>
+
+
+
+
                     </div>
 
                 </div>
@@ -237,7 +256,7 @@
 
 
         <!-- Page Content -->
-        <div class="p-4 bg-white w-full min-h-screen">`
+        <div class="p-4 bg-white w-full min-h-screen">
 
 
 

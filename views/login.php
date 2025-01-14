@@ -44,7 +44,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 ];
 
                 // Redirigir al dashboard
-                header('Location: ?page=dashboard');
+                if($_SESSION['user']['level'] == '1'){
+                    
+                    header('Location: ?page=dashboard');
+                }else{
+                    header('Location: ?page=vendor_client');
+                }
                 exit;
             } else {
                 $error = 'Usuario o contraseña incorrectos.';
@@ -70,7 +75,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 </head>
 
 <body class="bg-gray-900 flex items-center justify-center h-screen">
-    <div class="bg-gray-800 text-white p-6 rounded-lg shadow-md w-full max-w-md mx-4 sm:mx-auto">
+    <div class="bg-gray-800 text-white p-12 rounded-lg shadow-md w-full max-w-md mx-4 sm:mx-auto">
         <div>
             <img src="https://surgesetup.com/img/SurgePays_Logo_.png" alt="SurgePays Logo" class="align-items-center mb-2 w-auto h-auto p-8">
         </div>
