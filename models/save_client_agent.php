@@ -98,7 +98,7 @@ function saveTransaction($data)
 
     echo "Transacción guardada correctamente. Crédito actual: $currentCredit";
 
-    header("Location: /vendor/vendor/?page=vendor_client&success=ok");
+    header("Location: /vendor/?page=vendor_client&success=ok");
     //header("Location: /hr-surge.com/vendor/?page=vendor_client&success=ok");
 }
 
