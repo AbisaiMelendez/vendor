@@ -457,7 +457,8 @@ $employeeJson = json_encode($dataEmployee);
                 title: '¡Compra Realizada!',
                 text: 'La transaccion ha sido creada exitosamente.',
             }).then(() => {
-                window.location.href = '/hr-surge.com/vendor/index.php?page=vendor_client';
+                window.location.href = '/vendor/index.php?page=vendor_client';
+                // window.location.href = '/hr-surge.com/vendor/index.php?page=vendor_client';
             });
         }
 
