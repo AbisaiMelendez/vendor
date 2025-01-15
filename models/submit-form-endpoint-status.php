@@ -54,7 +54,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         ]);
 
         // Redirección después de éxito
-        header("Location: /hr-surge.com/vendor/index.php?page=user&alert=update");
+        header("Location: /vendor/index.php?page=user&alert=update");
+        // header("Location: /hr-surge.com/vendor/index.php?page=user&alert=update");
         exit;
     } catch (PDOException $e) {
         // Mostrar mensaje de error
@@ -65,12 +66,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                  title: 'Error al actualizar',
                  text: 'Error al actualizar usuario: " . addslashes($e->getMessage()) . "',
              }).then(() => {
-                window.location.href = '/hr-surge.com/vendor/index.php?page=user'; // Redirige después del error
+                window.location.href = '/vendor/index.php?page=user'; // Redirige después del error
              });
          </script>
      ";
 
-        header("Location: /hr-surge.com/vendor/index.php?page=user&alert=error&message=" . urlencode($e->getMessage()));
+        header("Location: /vendor/index.php?page=user&alert=error&message=" . urlencode($e->getMessage()));
         exit;
     }
 } else {

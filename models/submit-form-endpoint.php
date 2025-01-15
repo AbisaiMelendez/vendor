@@ -57,7 +57,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         ]);
 
 
-        header("Location: /hr-surge.com/vendor/index.php?page=user&alert=success");
+        header("Location: /vendor/index.php?page=user&alert=success");
+        // header("Location: /hr-surge.com/vendor/index.php?page=user&alert=success");
 
         // header("Location: /hr-surge.com/vendor/index.php?page=user");
 
@@ -74,14 +75,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                  title: 'Error al guardar',
                  text: 'Error al insertar usuario: " . addslashes($e->getMessage()) . "',
              }).then(() => {
-                window.location.href = '/hr-surge.com/vendor/index.php?page=user'; // Redirige después del éxito
+                window.location.href = '/vendor/index.php?page=user'; // Redirige después del éxito
                 
              });
          </script>
      ";
 
         echo "Error al insertar usuario: " . $e->getMessage();
-        header("Location: /hr-surge.com/vendor/index.php?page=user&alert=error&message=" . urlencode($e->getMessage()));
+        header("Location: /vendor/index.php?page=user&alert=error&message=" . urlencode($e->getMessage()));
 
     }
 } else {
