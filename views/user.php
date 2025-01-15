@@ -885,7 +885,7 @@ $currentUrl = buildUrlWithParams();
                 title: '¡Usuario creado!',
                 text: 'El usuario ha sido creado exitosamente.',
             }).then(() => {
-                window.location.href = '/hr-surge.com/vendor/index.php?page=user';
+                window.location.href = '/vendor/index.php?page=user';
             });
         } else if (status === 'update') {
             Swal.fire({
@@ -893,7 +893,7 @@ $currentUrl = buildUrlWithParams();
                 title: '¡Usuario actualizado!',
                 text: 'El usuario ha sido actualizado exitosamente.',
             }).then(() => {
-                window.location.href = '/hr-surge.com/vendor/index.php?page=user';
+                window.location.href = '/vendor/index.php?page=user';
             });
         } else if (status === 'error') {
             Swal.fire({
@@ -901,7 +901,7 @@ $currentUrl = buildUrlWithParams();
                 title: 'Error',
                 text: message ? decodeURIComponent(message) : 'Hubo un problema al crear el usuario.',
             }).then(() => {
-                window.location.href = '/hr-surge.com/vendor/index.php?page=user';
+                window.location.href = '/vendor/index.php?page=user';
             });
         }
     </script>
