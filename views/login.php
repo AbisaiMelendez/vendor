@@ -34,7 +34,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $stmt->execute();
             $user = $stmt->fetch(PDO::FETCH_ASSOC);
 
-            if ($user && password_verify($password, $user['password'])) {
+            if ($user && password_verify($password, $user['password']) && $user['status'] == "1") {
                 // Guardar los datos del usuario en la sesión
                 $_SESSION['user'] = [
                     'userId' => $user['userId'],
