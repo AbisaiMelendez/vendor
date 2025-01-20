@@ -25,19 +25,23 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $firstlastname = $_POST['firstlastname'] ?? null;
     $status = $_POST['status'] ?? 1;
     $typeAccount = $_POST['typeCuenta'] ?? 1;
+    // New campos
+    $vendor_dui = $_POST['vendor_dui'] ?? null;
+    $vendor_nit = $_POST['vendor_nit'] ?? null;
+    $typeBank = $_POST['typeBank'] ?? null;
 
     try {
         echo '<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>';
 
         $query = "
-            INSERT INTO users (
-                userLevel, badge, username, password, name_vendor, firstName,
-                firstLastName, fullname, number_account, status, typeAccount ,  comments
-            ) VALUES (
-                :userLevel, :badge, :username, :password, :vendor_name, :firstname,
-                :firstlastname, :fullname,  :number_account, :status, :typeAccount,  :comments
-            )
-        ";
+        INSERT INTO users (
+            userLevel, badge, username, password, name_vendor, firstName,
+            firstLastName, fullname, number_account, status, typeAccount, comments, vendor_dui, vendor_nit, typeBank
+        ) VALUES (
+            :userLevel, :badge, :username, :password, :vendor_name, :firstname,
+            :firstlastname, :fullname, :number_account, :status, :typeAccount, :comments, :vendor_dui, :vendor_nit, :typeBank
+        )
+    ";
 
         $stmt = $conn->prepare($query);
 
@@ -54,7 +58,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             ':status' => $status,
             ':typeAccount' => $typeAccount,
             ':comments' => $comments,
+            ':vendor_dui' => $vendor_dui,
+            ':vendor_nit' => $vendor_nit,
+            ':typeBank' => $typeBank,
         ]);
+
 
 
         header("Location: /vendor/index.php?page=user&alert=success");
@@ -83,7 +91,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
         echo "Error al insertar usuario: " . $e->getMessage();
         header("Location: /vendor/index.php?page=user&alert=error&message=" . urlencode($e->getMessage()));
-
     }
 } else {
     echo "No se enviaron datos por POST.";

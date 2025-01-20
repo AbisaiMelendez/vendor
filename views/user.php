@@ -228,11 +228,89 @@ $currentUrl = buildUrlWithParams();
                         <input type="text" id="fullname" name="fullname" class="w-full p-2 border rounded" required>
                     </div>
 
-
-
                     <div id="vendorContainer" style="display: none;">
                         <label for="vendor_name" class="font-semibold">Vendor Name</label>
                         <input type="text" id="vendor_name" name="vendor_name" class="w-full p-2 border rounded">
+                    </div>
+                    <div id="vendorDui" style="display: none;">
+                        <label for="vendor_dui" class="font-semibold">DUI:</label>
+                        <input type="text" id="vendor_dui" name="vendor_dui" class="w-full p-2 border rounded" oninput="formatDUI()">
+                    </div>
+
+                    <div id="vendorNit" style="display: none;">
+                        <label for="vendor_nit" class="font-semibold">NIT:</label>
+                        <input type="text" id="vendor_nit" name="vendor_nit" class="w-full p-2 border rounded" oninput="formatNIT()">
+                    </div>
+                    <div id="tipoBanco" style="display: none;">
+                        <label for="vendor_name" class="font-semibold">Type Bank</label>
+                        <select type="text" id="typeBank" name="typeBank" class="w-full p-2 border rounded">
+
+                            <option value="">Selected</option>
+
+                            <option value="Banco Agricola">Banco Agricola</option>
+                            <option value="Banco Promerica">Banco Promerica</option>
+                            <option value="Banco Cuscatlan">Banco Cuscatlan</option>
+                            <option value="Banco de América Central">Banco de América Central</option>
+                            <option value="Scotiabank El Salvador">Scotiabank El Salvador</option>
+                            <option value="Banco Davivienda El Salvador">Banco Davivienda El Salvador</option>
+                            <option value="Banco Azul">Banco Azul</option>
+                            <option value="Banco G&T Continental">Banco G&T Continental</option>
+                            <option value="Banco Hipotecario">Banco Hipotecario</option>
+                            <option value="Banco Industrial de El Salvador">Banco Industrial de El Salvador</option>
+                            <option value="Banco Ficohsa">Banco Ficohsa</option>
+                            <option value="Banco de Desarrollo de El Salvador">Banco de Desarrollo de El Salvador (BANDESAL)</option>
+                            <option value="Banco Caja de Crédito">Banco Caja de Crédito</option>
+                            <option value="Banco Interbank">Banco Interbank El Salvador</option>
+                            <option value="Banco Sabadell">Banco Sabadell</option>
+                            <option value="Banco La Hipotecaria">Banco La Hipotecaria</option>
+                            <option value="Banco Inmobiliario">Banco Inmobiliario</option>
+                            <option value="Banco Agrícola de El Salvador">Banco Agrícola de El Salvador</option>
+                            <option value="Banco de San Salvador">Banco de San Salvador</option>
+                            <option value="Banco Santa Tecla">Banco Santa Tecla</option>
+
+                            <option value="FEDECACES">FEDECACES (Federación de Cajas de Crédito de El Salvador)</option>
+                            <option value="Caja de Crédito de La Unión">Caja de Crédito de La Unión</option>
+                            <option value="Caja de Crédito de San Vicente">Caja de Crédito de San Vicente</option>
+                            <option value="Caja de Crédito de Sonsonate">Caja de Crédito de Sonsonate</option>
+                            <option value="Caja de Crédito de Ahuachapan">Caja de Crédito de Ahuachapán</option>
+                            <option value="Caja de Crédito de Chalatenango">Caja de Crédito de Chalatenango</option>
+                            <option value="Caja de Crédito de Santa Ana">Caja de Crédito de Santa Ana</option>
+                            <option value="Caja de Crédito de San Miguel">Caja de Crédito de San Miguel</option>
+                            <option value="Caja de Crédito de La Paz">Caja de Crédito de La Paz</option>
+                            <option value="Caja de Crédito de Usulután">Caja de Crédito de Usulután</option>
+                            <option value="Caja de Crédito de Morazan">Caja de Crédito de Morazán</option>
+                            <option value="Caja de Crédito de Cuscatlán">Caja de Crédito de Cuscatlán</option>
+                            <option value="Caja de Crédito de La Libertad">Caja de Crédito de La Libertad</option>
+                            <option value="Caja de Crédito de Comasagua">Caja de Crédito de Comasagua</option>
+                            <option value="Caja de Crédito El Congo">Caja de Crédito El Congo</option>
+                            <option value="Caja de Crédito El Paraíso">Caja de Crédito El Paraíso</option>
+                            <option value="Caja de Crédito de Ciudad Arce">Caja de Crédito de Ciudad Arce</option>
+                            <option value="Caja de Crédito de Zacatecoluca">Caja de Crédito de Zacatecoluca</option>
+                            <option value="Caja de Crédito El Rosario">Caja de Crédito El Rosario</option>
+                            <option value="Caja de Crédito de San Juan Opico">Caja de Crédito de San Juan Opico</option>
+
+                            <option value="Cooperativa COCAFE">Cooperativa COCAFE</option>
+                            <option value="Cooperativa de Ahorro y Crédito San Antonio">Cooperativa de Ahorro y Crédito San Antonio</option>
+                            <option value="Cooperativa de Ahorro y Crédito La Paz">Cooperativa de Ahorro y Crédito La Paz</option>
+                            <option value="Cooperativa de Ahorro y Crédito San Isidro">Cooperativa de Ahorro y Crédito San Isidro</option>
+                            <option value="Cooperativa de Ahorro y Crédito El Roble">Cooperativa de Ahorro y Crédito El Roble</option>
+                            <option value="Cooperativa de Ahorro y Crédito CrediFamilia">Cooperativa de Ahorro y Crédito CrediFamilia</option>
+                            <option value="Cooperativa de Ahorro y Crédito de La Libertad">Cooperativa de Ahorro y Crédito de La Libertad</option>
+                            <option value="Cooperativa de Ahorro y Crédito de Ahuachapan">Cooperativa de Ahorro y Crédito de Ahuachapán</option>
+                            <option value="Cooperativa de Ahorro y Crédito Santa Teresa">Cooperativa de Ahorro y Crédito Santa Teresa</option>
+                            <option value="Cooperativa de Ahorro y Crédito El Triunfo">Cooperativa de Ahorro y Crédito El Triunfo</option>
+                            <option value="Cooperativa de Ahorro y Crédito Coopeuch">Cooperativa de Ahorro y Crédito Coopeuch</option>
+                            <option value="Cooperativa de Ahorro y Crédito Accaciba">Cooperativa de Ahorro y Crédito Acacciba</option>
+                            <option value="Cooperativa de Ahorro y Crédito La Providencia">Cooperativa de Ahorro y Crédito La Providencia</option>
+                            <option value="Cooperativa de Ahorro y Crédito Sagrada Familia">Cooperativa de Ahorro y Crédito Sagrada Familia</option>
+                            <option value="Cooperativa de Ahorro y Crédito Solidaria">Cooperativa de Ahorro y Crédito Solidaria</option>
+                            <option value="Cooperativa de Ahorro y Crédito La Ceiba">Cooperativa de Ahorro y Crédito La Ceiba</option>
+                            <option value="Cooperativa de Ahorro y Crédito El Buen Samaritano">Cooperativa de Ahorro y Crédito El Buen Samaritano</option>
+                            <option value="Cooperativa de Ahorro y Crédito San José">Cooperativa de Ahorro y Crédito San José</option>
+                            <option value="Cooperativa de Ahorro y Crédito El Salvador">Cooperativa de Ahorro y Crédito El Salvador</option>
+
+
+                        </select>
                     </div>
                     <div id="tipoCuenta" style="display: none;">
                         <label for="vendor_name" class="font-semibold">Type Account</label>
@@ -340,7 +418,7 @@ $currentUrl = buildUrlWithParams();
                     </div>
 
 
-                    <div id="vendorContainer" >
+                    <div id="vendorContainer">
                         <label for="vendor_name" class="font-semibold">Vendor Name</label>
                         <input type="text" id="vendor_name" name="vendor_name" class="w-full p-2 border rounded" readonly>
                     </div>
@@ -598,6 +676,29 @@ $currentUrl = buildUrlWithParams();
 
         }
 
+        // formato para Dui
+        function formatDUI() {
+            var input = document.getElementById('vendor_dui');
+            let value = input.value.replace(/\D/g, ''); // Eliminar cualquier carácter no numérico
+            if (value.length > 8) {
+                value = value.substring(0, 8) + '-' + value.substring(8, 9); // Formato 000000-0
+            }
+            input.value = value;
+        }
+
+        //formato para NIT
+
+        function formatNIT() {
+            var input = document.getElementById('vendor_nit');
+            let value = input.value.replace(/\D/g, ''); // Eliminar cualquier carácter no numérico
+
+
+            if (value.length > 12) {
+                value = value.substring(0, 4) + '-' + value.substring(4, 10) + '-' + value.substring(10, 13) + '-' + value.substring(13, 14);
+            }
+
+            input.value = value;
+        }
 
 
         function searchWithStoredPath() {
@@ -781,6 +882,9 @@ $currentUrl = buildUrlWithParams();
             const accountContainer = document.getElementById('numberContainer');
             const commentsContainer = document.getElementById('commentsContainer');
             const tipoCuenta = document.getElementById('tipoCuenta');
+            const tipoBank = document.getElementById('tipoBanco');
+            const vendorNit = document.getElementById('vendorDui');
+            const vendorDui = document.getElementById('vendorNit');
 
 
             document.getElementById("firstname").value = "";
@@ -799,12 +903,18 @@ $currentUrl = buildUrlWithParams();
                 accountContainer.style.display = 'none';
                 commentsContainer.style.display = 'none';
                 tipoCuenta.style.display = 'none';
+                tipoBank.style.display = 'none';
+                vendorDui.style.display = 'none';
+                vendorNit.style.display = 'none';
             } else {
                 vendorContainer.style.display = 'block';
                 accountContainer.style.display = 'block';
                 commentsContainer.style.display = 'block';
                 badgeContainer.style.display = 'none';
                 tipoCuenta.style.display = 'block';
+                tipoBank.style.display = 'block';
+                vendorDui.style.display = 'block';
+                vendorNit.style.display = 'block';
 
 
                 document.getElementById("firstname").value = "";
@@ -812,6 +922,11 @@ $currentUrl = buildUrlWithParams();
                 document.getElementById("fullname").value = "";
                 document.getElementById("username").value = "";
                 document.getElementById("typeCuenta").value = "";
+                document.getElementById("vendor_dui").value = "";
+                document.getElementById("vendor_nit").value = "";
+                document.getElementById("typeCuenta").value = "";
+                document.getElementById("typeBank").value = "";
+                document.getElementById("password").value = "";
             }
         }
 
@@ -905,7 +1020,6 @@ $currentUrl = buildUrlWithParams();
             });
         }
     </script>
-
 
 
 </body>
