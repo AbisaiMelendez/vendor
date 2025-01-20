@@ -321,14 +321,15 @@ $currentUrl = buildUrlWithParams();
                             <option value="Cuenta corriente">Cuenta corriente</option>
                         </select>
                     </div>
-                    <div>
-                        <label for="password" class="block font-semibold">Password</label>
-                        <input type="password" id="password" name="password" class="w-full p-2 border rounded" required>
-                    </div>
                     <div id="numberContainer" style="display: none;">
                         <label for="number_account" class="font-semibold">Number Account</label>
                         <input type="text" id="number_account" name="number_account" class="w-full p-2 border rounded">
                     </div>
+                    <div>
+                        <label for="password" class="block font-semibold">Password</label>
+                        <input type="password" id="password" name="password" class="w-full p-2 border rounded" required>
+                    </div>
+                   
                     <div id="commentsContainer" style="display: none;">
                         <label for="comments" class="font-semibold">Comments</label>
                         <textarea id="comments" name="comments" rows="4" class="w-full p-2 border rounded"></textarea>
