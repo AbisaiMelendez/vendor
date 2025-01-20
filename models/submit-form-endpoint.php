@@ -36,7 +36,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $query = "
         INSERT INTO users (
             userLevel, badge, username, password, name_vendor, firstName,
-            firstLastName, fullname, number_account, status, typeAccount, comments, vendor_dui, vendor_nit, typeBank
+            firstLastName, fullname, number_account, status, typeAccount, comments, dui, nit, typeBank
         ) VALUES (
             :userLevel, :badge, :username, :password, :vendor_name, :firstname,
             :firstlastname, :fullname, :number_account, :status, :typeAccount, :comments, :vendor_dui, :vendor_nit, :typeBank
