@@ -17,7 +17,8 @@ try {
     // Actualizar el campo 'status' a 'paid' donde 'due_date' es igual o menor a la fecha actual
     $sqlUpdateInstallments = "UPDATE installments 
                               SET status = 'paid'
-                              WHERE due_date <= :currentDate";
+                              WHERE status ='pending' AND due_date <= :currentDate" ;
+
     $stmt = $pdo->prepare($sqlUpdateInstallments);
     $stmt->bindParam(':currentDate', $currentDate);
     $stmt->execute();

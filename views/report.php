@@ -123,7 +123,7 @@ include '../vendor/models/cuotas-vendor.php';
                 // echo 'level user id----------->' . $levelUSER;
 
                 //print_r($results);
-                if ($levelUSER == '2') {
+                if ($levelUSER == '2' || $levelUSER == '3') {
                     $results7 = array_filter($results7, function ($row) use ($idUSER) {
                         return $row['idVendor'] == $idUSER;
                     });

@@ -163,7 +163,7 @@ $employeeJson = json_encode($dataEmployee);
             <a href="#">
                 <i class="fas fa-user text-green-300"></i>
             </a>
-            <span class="text-sm"><?php echo 'Bienvenido/a '. $nameVendor; ?></span>
+            <span class="text-sm"><?php echo 'Bienvenido/a ' . $nameVendor; ?></span>
         </div>
     </header>
 
@@ -217,6 +217,7 @@ $employeeJson = json_encode($dataEmployee);
                     <label for="total">Monto a cancelar ($)</label>
                     <input type="number" id="total" name="total" step="0.01" placeholder="Ej: 150.00" required readonly>
                 </div>
+                <input type="text" id="vendorCondicion" name="vendorCondicion" required readonly value='<?php echo $_SESSION['user']['level']; ?>' hidden>
             </div>
 
             <div class="form-group">
@@ -224,22 +225,45 @@ $employeeJson = json_encode($dataEmployee);
                 <input type="text" id="product" name="product" placeholder="Detalle del producto" required>
             </div>
             <div class="payment-options">
-                <label>
-                    <input type="radio" name="payment_option" value="1 cuota" required>
-                    1 cuota
-                </label>
-                <label>
-                    <input type="radio" name="payment_option" value="2 cuotas $25" required>
-                    2 cuotas a partir de $25
-                </label>
-                <label>
-                    <input type="radio" name="payment_option" value="3 cuotas $45">
-                    3 cuotas a partir de $45
-                </label>
-                <label>
-                    <input type="radio" name="payment_option" value="4 cuotas $75">
-                    4 cuotas a partir de $75
-                </label>
+                <?php $levelVendor = $_SESSION['user']['level'];
+
+                if ($levelVendor == 3) {; ?>
+                    <label>
+                        <input type="radio" name="payment_option" value="2 cuotas $25" required>
+                        2 cuotas a partir de $25
+                    </label>
+                    <label>
+                        <input type="radio" name="payment_option" value="3 cuotas $45">
+                        3 cuotas a partir de $45
+                    </label>
+                    <label>
+                        <input type="radio" name="payment_option" value="4 cuotas $75">
+                        4 cuotas a partir de $75
+                    </label>
+                    <label>
+                        <input type="radio" name="payment_option" value="6 cuotas $100">
+                        6 cuotas a partir de $100
+                    </label>
+                <?php
+                } else {; ?>
+                    <label>
+                        <input type="radio" name="payment_option" value="1 cuota" required>
+                        1 cuota
+                    </label>
+                    <label>
+                        <input type="radio" name="payment_option" value="2 cuotas $25" required>
+                        2 cuotas a partir de $25
+                    </label>
+                    <label>
+                        <input type="radio" name="payment_option" value="3 cuotas $45">
+                        3 cuotas a partir de $45
+                    </label>
+                    <label>
+                        <input type="radio" name="payment_option" value="4 cuotas $75">
+                        4 cuotas a partir de $75
+                    </label>
+                <?php }; ?>
+
             </div>
 
 
@@ -283,9 +307,22 @@ $employeeJson = json_encode($dataEmployee);
                 const badge = e.target.value.trim();
                 const employee = dataEmployee.find(emp => emp.badge === badge && emp.status === 1);
 
+                const quantityInput = document.getElementById('quantity');
+                const priceInput = document.getElementById('price');
+                const totalInput = document.getElementById('total');
+                const paymentOptions = document.querySelectorAll('input[name="payment_option"]');
+
+
+
                 if (employee) {
                     // Construyendo el nombre completo
                     const fullName = `${employee.firstName || ''} ${employee.secondName || ''} ${employee.firstLastName || ''} ${employee.secondLastName || ''}`.trim();
+
+                    //reset los inputs
+                    quantityInput.value = '';
+                    priceInput.value = '';
+                    totalInput.value = '';
+                    paymentOptions.value = '';
 
                     // Validar y actualizar los campos del formulario
                     const nameField = document.getElementById('name');
@@ -332,9 +369,6 @@ $employeeJson = json_encode($dataEmployee);
                         // Mostrar el crédito en el campo
                         totalCreditoField.innerHTML = `$${totalCredito}`;
                     }
-
-
-
 
                 } else {
 
@@ -385,36 +419,69 @@ $employeeJson = json_encode($dataEmployee);
         const totalInput = document.getElementById('total');
         const paymentOptions = document.querySelectorAll('input[name="payment_option"]');
         const totalCreditoField = document.getElementById('total_credito');
+        const vendorIf = document.getElementById('vendorCondicion');
+
+
+
 
         function calculateTotal() {
             const quantity = parseFloat(quantityInput.value) || 0;
             const price = parseFloat(priceInput.value) || 0;
             const total = quantity * price;
-
+            const vendorCondicional = parseInt(vendorIf.value);
+         
             // Obtener el crédito actual desde el campo total_credito
             const currentCredit = parseFloat(totalCreditoField ? totalCreditoField.textContent.replace('$', '').trim() : '0');
 
-            if (total > 100) {
-                Swal.fire({
-                    icon: 'error',
-                    title: 'Monto excedido',
-                    text: 'El monto no puede ser mayor a $100.',
-                });
-                totalInput.value = '';
-                priceInput.value = '';
-                quantityInput.value = '';
-            } else if (total > currentCredit) {
-                Swal.fire({
-                    icon: 'error',
-                    title: 'Crédito insuficiente',
-                    text: `El monto excede su crédito disponible de $${currentCredit}.`,
-                });
-                totalInput.value = '';
-                priceInput.value = '';
-                quantityInput.value = '';
+            if (vendorCondicional == 3) {
+                if (total > 500) {
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Monto excedido',
+                        text: 'El monto no puede ser mayor a $500.',
+                    });
+                    totalInput.value = '';
+                    priceInput.value = '';
+                    quantityInput.value = '';
+                     
+                } else if (total > currentCredit) {
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Crédito insuficiente',
+                        text: `El monto excede su crédito disponible de $${currentCredit}.`,
+                    });
+                    totalInput.value = '';
+                    priceInput.value = '';
+                    quantityInput.value = '';
+                } else {
+                    totalInput.value = total.toFixed(2);
+                    updatePaymentOptions(price);
+                }
+
             } else {
-                totalInput.value = total.toFixed(2);
-                updatePaymentOptions(price);
+
+                if (total > 100) {
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Monto excedido',
+                        text: 'El monto no puede ser mayor a $100.',
+                    });
+                    totalInput.value = '';
+                    priceInput.value = '';
+                    quantityInput.value = '';
+                } else if (total > currentCredit) {
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Crédito insuficiente',
+                        text: `El monto excede su crédito disponible de $${currentCredit}.`,
+                    });
+                    totalInput.value = '';
+                    priceInput.value = '';
+                    quantityInput.value = '';
+                } else {
+                    totalInput.value = total.toFixed(2);
+                    updatePaymentOptions(price);
+                }
             }
         }
 

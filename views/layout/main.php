@@ -48,7 +48,7 @@ include '../vendor/models/notificacions.php';
                 $levelUSER = $_SESSION['user']['level'];
 
 
-                if ($levelUSER == '2') {
+                if ($levelUSER == '2' || $levelUSER =='3' ) {
                 ?>
                     <a href="?page=transaction" class="flex items-center py-2 px-4 hover:bg-indigo-900 hover:text-white">
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 mr-3">
@@ -128,7 +128,7 @@ include '../vendor/models/notificacions.php';
                         <?php
                         // Inicializar $notifications como un array vacío si no está definido
                         $level = $_SESSION['user']['level'];
-                        if ($level == 1) {
+                        if ($level == 1 ) {
                             $notifications = $notifications ?? [];
                             if (!empty($notificationData)) {
                                 foreach ($notificationData as $item) {
