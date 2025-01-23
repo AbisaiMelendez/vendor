@@ -118,11 +118,14 @@ include '../vendor/models/list-vendors.php';
                 <tr>
                     <th>ID</th>
                     <th>Nombre de Usuario</th>
-                    <th>Nombre del Vendedor</th>
+                    <th>Vendor</th>
                     <th>Nombre Completo</th>
+                    <th>DUI</th>
+                    <th>NIT</th>
+                    <th>Banco</th>
                     <th>Tipo de Cuenta</th>
-                    <th>Nivel de Usuario</th>
                     <th>Número de Cuenta</th>
+                    <th>Nivel de Usuario</th>
                     <th>Status</th>
                     <th>Fecha de Creación</th>
 
@@ -140,9 +143,13 @@ include '../vendor/models/list-vendors.php';
                             <td>{$row['username']}</td>
                             <td>{$row['name_vendor']}</td>
                             <td>{$row['fullname']}</td>
+                            <td>{$row['dui']}</td>
+                            <td>{$row['nit']}</td>
+                            <td>{$row['typeBank']}</td>
                             <td>{$row['typeAccount']}</td>
+                            <td>{$row['number_account']}</td>
                             <td>{$row['userLevel']}</td>
-                            <td>{$row['number_account']}</td>";
+                            ";
                 
                     // Aquí implementamos el status dinámicamente
                     if ($row['status'] == 1) {

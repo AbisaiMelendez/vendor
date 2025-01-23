@@ -16,7 +16,7 @@ try {
     $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
     // Preparar y ejecutar la consulta
-    $query = "SELECT * FROM users";
+    $query = "SELECT * FROM users ORDER BY userId DESC";
     $stmt = $conn->prepare($query);
     $stmt->execute();
 

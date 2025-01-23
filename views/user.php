@@ -15,10 +15,6 @@ $dataEmployeess = json_decode($dataEmployee, true);
 $filteredData = $dataDecode;
 
 
-
-
-
-
 // Filtrar por estado
 if (isset($_GET['status']) && $_GET['status'] !== '') {
     $searchStatus = (int)$_GET['status']; // Convierte a entero para comparación estricta
@@ -194,16 +190,17 @@ $currentUrl = buildUrlWithParams();
 
                 <!-- Formulario -->
                 <form action="../vendor/models/submit-form-endpoint.php" method="POST" class="space-y-4">
-
-
                     <div>
                         <label class="block font-semibold mt-4">Select User</label>
                         <div name="" id="" class="mt-4">
-                            <label class="mr-8">
+                            <label class="mr-8 ">
                                 <input type="radio" name="userLevel" id="userLevel" value="1" onchange="toggleBadgeInput()" required> Admin
                             </label>
                             <label>
                                 <input type="radio" name="userLevel" id="userLevel" value="2" onchange="toggleBadgeInput()" required> Vendor
+                            </label>
+                            <label>
+                                <input type="radio" class="ml-8" name="userLevel" id="userLevel" value="3" onchange="toggleBadgeInput()" required> Optica
                             </label>
                         </div>
                     </div>
@@ -329,7 +326,7 @@ $currentUrl = buildUrlWithParams();
                         <label for="password" class="block font-semibold">Password</label>
                         <input type="password" id="password" name="password" class="w-full p-2 border rounded" required>
                     </div>
-                   
+
                     <div id="commentsContainer" style="display: none;">
                         <label for="comments" class="font-semibold">Comments</label>
                         <textarea id="comments" name="comments" rows="4" class="w-full p-2 border rounded"></textarea>
@@ -417,15 +414,31 @@ $currentUrl = buildUrlWithParams();
                         <label for="fullname" class="block font-semibold">Full Name</label>
                         <input type="text" id="nameField" name="nameField" class="w-full p-2 border rounded" readonly>
                     </div>
+                    <div>
+                        <label for="fullname" class="block font-semibold">DUI</label>
+                        <input type="text" id="vendorDUI" name="vendorDUI" class="w-full p-2 border rounded" readonly>
+                    </div>
+                    <div>
+                        <label for="fullname" class="block font-semibold">NIT</label>
+                        <input type="text" id="vendorNIT" name="vendorNIT" class="w-full p-2 border rounded" readonly>
+                    </div>
 
 
                     <div id="vendorContainer">
-                        <label for="vendor_name" class="font-semibold">Vendor Name</label>
-                        <input type="text" id="vendor_name" name="vendor_name" class="w-full p-2 border rounded" readonly>
+                        <label for="" class="font-semibold">Vendor Name</label>
+                        <input type="text" id="vendorNAME" name="vendorNAME" class="w-full p-2 border rounded" readonly>
                     </div>
                     <div>
                         <label for="password" class="block font-semibold">Password</label>
                         <input type="password" id="password" name="password" class="w-full p-2 border rounded">
+                    </div>
+                    <div id="numberContainer" style="">
+                        <label for="numberAccountField" class="font-semibold">Bank</label>
+                        <input type="text" id="vendorBANK" name="vendorBANK" class="w-full p-2 border rounded" readonly>
+                    </div>
+                    <div id="numberContainer" style="">
+                        <label for="numberAccountField" class="font-semibold">Type Account</label>
+                        <input type="text" id="vendorAccountBank" name="vendorAccountBank" class="w-full p-2 border rounded" readonly>
                     </div>
                     <div id="numberContainer" style="">
                         <label for="numberAccountField" class="font-semibold">Number Account</label>
@@ -457,9 +470,6 @@ $currentUrl = buildUrlWithParams();
                     <input type="text" id="badgeField" name="badgeField" class="w-full p-2 border rounded" hidden>
                     <input type="text" id="dataUser" name="dataUser" class="w-full p-2 border rounded" hidden>
                     <input type="text" id="numberAccountFieldOLD" name="numberAccountFieldOLD" class="w-full p-2 border rounded" hidden>
-
-
-
 
                     <!-- <div>
                         <label for="createdAt" class="block font-semibold">Created At</label>
@@ -537,10 +547,13 @@ $currentUrl = buildUrlWithParams();
                 <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Username</th>
                 <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Name</th>
                 <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Vendor Name</th>
+                <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Vendor Dui</th>
+                <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Vendor Nit</th>
+                <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Bank</th>
                 <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Number Account</th>
                 <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Type Account</th>
-                <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Type User</th>
                 <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Badge</th>
+                <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Type User</th>
                 <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Status</th>
                 <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Created At</th>
                 <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Action</th>
@@ -553,16 +566,28 @@ $currentUrl = buildUrlWithParams();
                     <td class="px-6 py-4 whitespace-nowrap text-medium text-gray-900"><?php echo htmlspecialchars($user['username']); ?></td>
                     <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900"><?php echo htmlspecialchars($user['fullname']); ?></td>
                     <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900"><?php echo htmlspecialchars($user['name_vendor']); ?></td>
-                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900"><?php echo htmlspecialchars($user['number_account']); ?></td>
+                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900"><span class="px-2 inline-flex text-medium leading-5 font-semibold rounded-full bg-purple-100 text-green-800"><?php echo htmlspecialchars($user['dui']); ?></span></td>
+                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900"><span class="px-2 inline-flex text-medium leading-5 font-semibold rounded-full bg-blue-100 text-green-800"><?php echo htmlspecialchars($user['nit']); ?></span></td>
+                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900"><span class="px-2 inline-flex text-medium leading-5 font-semibold rounded-full bg-green-100 text-green-800"><?php echo htmlspecialchars($user['typeBank']); ?></span></td>
+                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900"><span class="px-2 inline-flex text-medium leading-5 font-semibold rounded-full bg-purple-100 text-green-800"><?php echo htmlspecialchars($user['number_account']); ?></span></td>
                     <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900"><?php echo htmlspecialchars($user['typeAccount']); ?></td>
                     <td class="px-6 py-4 whitespace-nowrap">
                         <span class="px-2 inline-flex text-medium leading-5 font-semibold rounded-full bg-purple-100 text-green-800"> <?php echo $user['badge'] ?></span>
                     </td>
                     <td class="px-6 py-4 whitespace-nowrap">
-                        <span class="px-2 inline-flex text-medium leading-5 font-semibold rounded-full bg-purple-100 text-green-800"> <?php
-                                                                                                                                        echo $user['userLevel'] == 1 ? 'Admin' : 'Vendor';
-                                                                                                                                        ?></span>
+                        <span class="px-2 inline-flex text-medium leading-5 font-semibold rounded-full bg-purple-100 text-green-800">
+                            <?php
+                            if ($user['userLevel'] == 1) {
+                                echo 'Admin';
+                            } elseif ($user['userLevel'] == 2) {
+                                echo 'Vendor';
+                            } elseif ($user['userLevel'] == 3) {
+                                echo 'Optica';
+                            }
+                            ?>
+                        </span>
                     </td>
+
                     <td class="px-6 py-4 whitespace-nowrap">
                         <?php if ($user['status'] == 1): ?>
                             <span class="px-2 inline-flex text-sm leading-5 font-semibold rounded-full bg-green-100 text-green-800">Active</span>
@@ -587,6 +612,10 @@ $currentUrl = buildUrlWithParams();
                                 data-comments="<?php echo ($user['comments']); ?>"
                                 data-status="<?php echo $user['status']; ?>"
                                 data-numberAccount="<?php echo $user['number_account']; ?>"
+                                data-dui="<?php echo $user['dui']; ?>"
+                                data-nit="<?php echo $user['nit']; ?>"
+                                data-typeBank="<?php echo $user['typeBank']; ?>"
+                                data-typeAccount="<?php echo $user['typeAccount']; ?>"
                                 data-user="<?php echo htmlspecialchars(json_encode($user, JSON_HEX_TAG | JSON_HEX_AMP | JSON_HEX_APOS | JSON_HEX_QUOT), ENT_QUOTES, 'UTF-8'); ?>">
                                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
                                     <path stroke-linecap="round" stroke-linejoin="round" d="M16.862 4.487l1.687-1.688a1.875 1.875 0 1 1 2.652 2.652L10.582 16.07a4.5 4.5 0 0 1-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 0 1 1.13-1.897l8.932-8.931Zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0 1 15.75 21H5.25A2.25 2.25 0 0 1 3 18.75V8.25A2.25 2.25 0 0 1 5.25 6H10" />
@@ -784,6 +813,11 @@ $currentUrl = buildUrlWithParams();
             const commentsOld = button.getAttribute('data-comments');
             const dataUser = button.getAttribute('data-user');
             const numberAccount = button.getAttribute('data-numberAccount');
+            const dui = button.getAttribute('data-dui');
+            const nit = button.getAttribute('data-nit');
+            const typeBank = button.getAttribute('data-typeBank');
+            const bank = button.getAttribute('data-bank');
+            const bankTypeAccount = button.getAttribute('data-typeAccount');
 
             console.log('-------------------->' + vendorName);
 
@@ -800,9 +834,16 @@ $currentUrl = buildUrlWithParams();
                 commentsOld: commentsOld,
                 dataUser: dataUser,
                 numberAccount: numberAccount,
+                dui: dui,
+                nit: nit,
+                bank: bank,
+                typeBank: typeBank,
+                bankAccountType: bankTypeAccount,
             };
 
             // Imprime el JSON en la consola para depuración
+            console.log(JSON.stringify(userData, null, 2));
+            console.log(JSON.stringify(dui, null, 2));
             console.log(JSON.stringify(userData, null, 2));
 
             // Opcional: pasa los datos al popup si necesitas mostrarlos
@@ -818,6 +859,11 @@ $currentUrl = buildUrlWithParams();
             document.getElementById('commentsField').value = userData.commentsOld;
             document.getElementById('numberAccountField').value = userData.numberAccount;
             document.getElementById('statusField').value = "";
+            document.getElementById('vendorNAME').value = userData.vendorName;
+            document.getElementById('vendorNIT').value = userData.nit;
+            document.getElementById('vendorDUI').value = userData.dui;
+            document.getElementById('vendorBANK').value = userData.typeBank;
+            document.getElementById('vendorAccountBank').value = userData.bankAccountType;
 
             //Hidden inputs
             document.getElementById('statusOld').value = userData.status;

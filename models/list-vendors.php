@@ -16,17 +16,20 @@ try {
 
     // Preparar y ejecutar la consulta
     $query = "
-    SELECT 
-   *
-        FROM users
-        WHERE userLevel = 2 
-        OR userLevel LIKE '%Vendor%';
-        ";
+    SELECT * 
+    FROM users
+    WHERE userLevel = 2 
+    OR userLevel LIKE '%Vendor%'
+    ORDER BY userId DESC;
+    ";
+
     $stmt = $conn->prepare($query);
     $stmt->execute();
 
     // Obtener todos los resultados y enviarlos en formato JSON
     $results = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+  
     //echo json_encode($results);
 
 } catch (PDOException $e) {
