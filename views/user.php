@@ -582,7 +582,7 @@ $currentUrl = buildUrlWithParams();
                             } elseif ($user['userLevel'] == 2) {
                                 echo 'Vendor';
                             } elseif ($user['userLevel'] == 3) {
-                                echo 'Optica';
+                                echo 'Vendor - Optica';
                             }
                             ?>
                         </span>

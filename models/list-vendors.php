@@ -19,17 +19,17 @@ try {
     SELECT * 
     FROM users
     WHERE userLevel = 2 
-    OR userLevel LIKE '%Vendor%'
+    OR userLevel = 3
     ORDER BY userId DESC;
     ";
-
+    
     $stmt = $conn->prepare($query);
     $stmt->execute();
 
     // Obtener todos los resultados y enviarlos en formato JSON
     $results = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
-  
+
     //echo json_encode($results);
 
 } catch (PDOException $e) {

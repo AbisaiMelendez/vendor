@@ -133,7 +133,6 @@ include '../vendor/models/cuotas-vendor.php';
                     <th>Total</th>
                     <th>Opción de Pago</th>
                     <th>Trabajo</th>
-                    <th>Compañía</th>
                     <th>Fecha de Creación</th>
                     <th>Actions</th>
                     <th>Cuotas</th>
@@ -176,7 +175,6 @@ include '../vendor/models/cuotas-vendor.php';
                         <td>{$row['total']}</td>
                         <td>{$row['payment_option']}</td>
                         <td>{$row['job']}</td>
-                        <td>{$row['company']}</td>
                         <td>{$row['created_at']}</td>
                         <td>
                             <button class='bg-blue-500 text-white rounded hover:bg-blue-600' onclick='getId({$row['id']})'>
