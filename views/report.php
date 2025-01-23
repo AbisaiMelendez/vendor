@@ -103,6 +103,10 @@ include '../vendor/models/cuotas-vendor.php';
                     <th>idVendor</th>
                     <th>vendorName</th>
                     <th>fullnameVendorName</th>
+                    <th>vendorDui</th>
+                    <th>vendorNit</th>
+                    <th>TypeBank</th>
+                    <th>TypeAccount</th>
                     <th>NumberAccountVendor</th>
                     <th>Comments</th>
                     <th>Fecha de Creación del Pago</th>
@@ -156,6 +160,10 @@ include '../vendor/models/cuotas-vendor.php';
             <td>{$row['idVendor']}</td>
             <td>{$row['nameVendor']}</td>
             <td>{$row['fullnameVendor']}</td>
+            <td>{$row['dui']}</td>
+            <td>{$row['nit']}</td>
+            <td>{$row['typeBank']}</td>
+            <td>{$row['typeAccount']}</td>
             <td>{$row['number_account']}</td>
             <td>{$row['comments']}</td>
             <td>{$row['payment_created_at']}</td>

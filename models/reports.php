@@ -29,7 +29,11 @@ try {
             vt.job AS job, 
             vt.idVendor, 
             vt.nameVendor, 
-            u.fullname AS fullnameVendor, 
+            u.fullname AS fullnameVendor,
+			u.dui,
+            u.nit,
+            u.typeBank,
+            u.typeAccount,
             u.number_account, 
             u.comments,
             vt.created_at AS payment_created_at

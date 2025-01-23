@@ -550,8 +550,8 @@ $currentUrl = buildUrlWithParams();
                 <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Vendor Dui</th>
                 <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Vendor Nit</th>
                 <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Bank</th>
-                <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Number Account</th>
                 <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Type Account</th>
+                <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Number Account</th>
                 <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Badge</th>
                 <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Type User</th>
                 <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Status</th>
@@ -569,8 +569,8 @@ $currentUrl = buildUrlWithParams();
                     <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900"><span class="px-2 inline-flex text-medium leading-5 font-semibold rounded-full bg-purple-100 text-green-800"><?php echo htmlspecialchars($user['dui']); ?></span></td>
                     <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900"><span class="px-2 inline-flex text-medium leading-5 font-semibold rounded-full bg-blue-100 text-green-800"><?php echo htmlspecialchars($user['nit']); ?></span></td>
                     <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900"><span class="px-2 inline-flex text-medium leading-5 font-semibold rounded-full bg-green-100 text-green-800"><?php echo htmlspecialchars($user['typeBank']); ?></span></td>
-                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900"><span class="px-2 inline-flex text-medium leading-5 font-semibold rounded-full bg-purple-100 text-green-800"><?php echo htmlspecialchars($user['number_account']); ?></span></td>
                     <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900"><?php echo htmlspecialchars($user['typeAccount']); ?></td>
+                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900"><span class="px-2 inline-flex text-medium leading-5 font-semibold rounded-full bg-purple-100 text-green-800"><?php echo htmlspecialchars($user['number_account']); ?></span></td>
                     <td class="px-6 py-4 whitespace-nowrap">
                         <span class="px-2 inline-flex text-medium leading-5 font-semibold rounded-full bg-purple-100 text-green-800"> <?php echo $user['badge'] ?></span>
                     </td>
