@@ -162,13 +162,14 @@ function saveInstallments($idbatch, $total, $installmentsCount)
 // estos son un viernes si y un viernes no.
 
 
+
 function calculatePaymentDates($installmentsCount, $startDate)
 {
     $dates = [];
     $currentDate = clone $startDate;
 
     // Generar dinámicamente las fechas válidas de pago
-    function generateValidPaymentDates($year)
+    function generateValidPaymentDates($year, $startDate)
     {
         $validPaymentDates = [];
 
@@ -183,7 +184,10 @@ function calculatePaymentDates($installmentsCount, $startDate)
             $currentDay = clone $firstDayOfMonth;
             while ($currentDay <= $lastDayOfMonth) {
                 if ($currentDay->format('N') == 5) { // N=5 es viernes
-                    $validPaymentDates["$year-$monthStr"][] = $currentDay->format('Y-m-d');
+                    // Solo incluir fechas iguales o posteriores a la fecha de inicio
+                    if ($currentDay >= $startDate) {
+                        $validPaymentDates["$year-$monthStr"][] = $currentDay->format('Y-m-d');
+                    }
                 }
                 $currentDay->modify('+1 day');
             }
@@ -193,7 +197,7 @@ function calculatePaymentDates($installmentsCount, $startDate)
     }
 
     $year = $startDate->format('Y');
-    $validPaymentDates = generateValidPaymentDates($year);
+    $validPaymentDates = generateValidPaymentDates($year, $startDate);
 
     for ($i = 0; $i < $installmentsCount; $i++) {
         $currentMonth = $currentDate->format('Y-m');
@@ -222,7 +226,6 @@ function calculatePaymentDates($installmentsCount, $startDate)
 
     return $dates;
 }
-
 
 
 
