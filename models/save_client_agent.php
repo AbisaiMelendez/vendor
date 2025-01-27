@@ -162,7 +162,6 @@ function saveInstallments($idbatch, $total, $installmentsCount)
 // estos son un viernes si y un viernes no.
 
 
-
 function calculatePaymentDates($installmentsCount, $startDate)
 {
     $dates = [];
