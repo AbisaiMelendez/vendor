@@ -128,30 +128,62 @@ function saveInstallments($idbatch, $total, $installmentsCount)
     echo "Cuotas guardadas correctamente.";
 }
 
+// // estas fechas son segun quincenan antepenultimo dia del mes
+// function calculatePaymentDates($installmentsCount, $startDate)
+// {
+//     $dates = [];
+//     $currentDate = clone $startDate;
+
+//     for ($i = 0; $i < $installmentsCount; $i++) {
+//         if ((int)$currentDate->format('d') > 14) {
+//             // Si estamos después del 14, primera cuota al penúltimo día del mes
+//             $currentDate->modify('last day of this month');
+//             $currentDate->modify('-2 day');
+//         } else {
+//             // Si estamos antes o en el 14, primera cuota al día 14
+//             $currentDate = new DateTime($currentDate->format('Y-m-14'));
+//         }
+
+//         $dates[] = clone $currentDate;
+
+//         // Alternar entre el 14 y el penúltimo día del siguiente mes
+//         if ((int)$currentDate->format('d') === 14) {
+//             $currentDate->modify('last day of this month');
+//             $currentDate->modify('-2 day');
+//         } else {
+//             $currentDate->modify('first day of next month');
+//             $currentDate = new DateTime($currentDate->format('Y-m-14'));
+//         }
+//     }
+
+//     return $dates;
+// }
+
+// estos son un viernes si y un viernes no.
+
 function calculatePaymentDates($installmentsCount, $startDate)
 {
     $dates = [];
     $currentDate = clone $startDate;
 
     for ($i = 0; $i < $installmentsCount; $i++) {
-        if ((int)$currentDate->format('d') > 14) {
-            // Si estamos después del 14, primera cuota al penúltimo día del mes
-            $currentDate->modify('last day of this month');
-            $currentDate->modify('-2 day');
-        } else {
-            // Si estamos antes o en el 14, primera cuota al día 14
-            $currentDate = new DateTime($currentDate->format('Y-m-14'));
+        // Ajustar al primer viernes si no lo es
+        if ($currentDate->format('N') != 5) { // N devuelve el día de la semana (1=Lunes, 5=Viernes)
+            $currentDate->modify('next Friday');
         }
 
+        // Agregar la fecha al arreglo de fechas
         $dates[] = clone $currentDate;
 
-        // Alternar entre el 14 y el penúltimo día del siguiente mes
-        if ((int)$currentDate->format('d') === 14) {
-            $currentDate->modify('last day of this month');
-            $currentDate->modify('-2 day');
-        } else {
+        // Avanzar al siguiente viernes alternado
+        $currentDate->modify('+2 weeks'); // Mover 2 semanas hacia adelante para alternar viernes
+
+        // Asegurar que seguimos dentro del mismo mes si corresponde, de lo contrario, mover al primer viernes del siguiente mes
+        if ($currentDate->format('j') > (int)$currentDate->format('t')) {
             $currentDate->modify('first day of next month');
-            $currentDate = new DateTime($currentDate->format('Y-m-14'));
+            if ($currentDate->format('N') != 5) {
+                $currentDate->modify('next Friday');
+            }
         }
     }
 
