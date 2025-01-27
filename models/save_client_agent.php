@@ -161,7 +161,6 @@ function saveInstallments($idbatch, $total, $installmentsCount)
 
 // estos son un viernes si y un viernes no.
 
-
 function calculatePaymentDates($installmentsCount, $startDate)
 {
     $dates = [];
@@ -183,12 +182,12 @@ function calculatePaymentDates($installmentsCount, $startDate)
             $currentDay = clone $firstDayOfMonth;
             while ($currentDay <= $lastDayOfMonth) {
                 if ($currentDay->format('N') == 5) { // N=5 es viernes
-                    // Solo incluir fechas iguales o posteriores a la fecha de inicio
+                    // Incluir solo los viernes válidos a partir del primer viernes posterior al inicio
                     if ($currentDay >= $startDate) {
                         $validPaymentDates["$year-$monthStr"][] = $currentDay->format('Y-m-d');
                     }
                 }
-                $currentDay->modify('+1 day');
+                $currentDay->modify('+7 days'); // Saltar directamente al siguiente viernes
             }
         }
 
@@ -225,7 +224,6 @@ function calculatePaymentDates($installmentsCount, $startDate)
 
     return $dates;
 }
-
 
 
 // Datos de ejemplo
