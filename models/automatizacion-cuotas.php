@@ -14,17 +14,17 @@ try {
     // Obtener la fecha actual
     $currentDate = date('Y-m-d');
 
-    // Actualizar el campo 'status' a 'paid' donde 'due_date' es igual o menor a la fecha actual
+    // Actualizar el campo 'status' a 'paid' donde 'due_date' es igual o menor a la fecha actual y el status sea 'pending'
     $sqlUpdateInstallments = "UPDATE installments 
                               SET status = 'paid'
-                              WHERE status ='pending' AND due_date <= :currentDate" ;
+                              WHERE status = 'pending' AND due_date <= :currentDate";
 
     $stmt = $pdo->prepare($sqlUpdateInstallments);
     $stmt->bindParam(':currentDate', $currentDate);
     $stmt->execute();
 
     // Consultar las filas que se actualizaron en installments
-    $sqlSelectInstallments = "SELECT idbatch, amount FROM installments WHERE due_date <= :currentDate";
+    $sqlSelectInstallments = "SELECT idbatch, amount FROM installments WHERE due_date <= :currentDate AND status = 'paid'";
     $stmt = $pdo->prepare($sqlSelectInstallments);
     $stmt->bindParam(':currentDate', $currentDate);
     $stmt->execute();
@@ -45,7 +45,7 @@ try {
         if ($vendorTransaction) {
             $badge = $vendorTransaction['badge'];
 
-            // Actualizar el campo 'current_credit' en la tabla credit sumando el 'amount'
+            // Actualizar el campo 'current_credit' en la tabla credits sumando el 'amount'
             $sqlUpdateCredit = "UPDATE credits 
                                 SET current_credit = current_credit + :amount
                                 WHERE badge = :badge";
@@ -54,9 +54,9 @@ try {
             $stmt->bindParam(':badge', $badge);
             $stmt->execute();
 
-            echo 'se actualizaron registros';
-        }else{
-            echo '0 registros actualizados';
+            echo "Se actualizó el crédito para el badge: $badge\n";
+        } else {
+            echo "No se encontró una transacción para idbatch: $idbatch\n";
         }
     }
 
