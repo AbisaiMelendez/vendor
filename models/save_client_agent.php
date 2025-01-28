@@ -169,7 +169,7 @@ function calculatePaymentDates($installmentsCount, $startDate)
     $currentDate = clone $startDate;
 
     // Generar dinámicamente las fechas válidas de pago
-    function generateValidPaymentDates($year)
+    function generateValidPaymentDates($year, $startDate)
     {
         $validPaymentDates = [];
 
@@ -184,9 +184,12 @@ function calculatePaymentDates($installmentsCount, $startDate)
             $currentDay = clone $firstDayOfMonth;
             while ($currentDay <= $lastDayOfMonth) {
                 if ($currentDay->format('N') == 5) { // N=5 es viernes
-                    $validPaymentDates["$year-$monthStr"][] = $currentDay->format('Y-m-d');
+                    // Solo incluir fechas iguales o posteriores a la fecha de inicio
+                    if ($currentDay >= $startDate) {
+                        $validPaymentDates["$year-$monthStr"][] = $currentDay->format('Y-m-d');
+                    }
                 }
-                $currentDay->modify('+7 days'); // Saltar directamente al siguiente viernes
+                $currentDay->modify('+1 day');
             }
         }
 
@@ -194,7 +197,7 @@ function calculatePaymentDates($installmentsCount, $startDate)
     }
 
     $year = $startDate->format('Y');
-    $validPaymentDates = generateValidPaymentDates($year);
+    $validPaymentDates = generateValidPaymentDates($year, $startDate);
 
     for ($i = 0; $i < $installmentsCount; $i++) {
         $currentMonth = $currentDate->format('Y-m');
@@ -202,7 +205,7 @@ function calculatePaymentDates($installmentsCount, $startDate)
         if (isset($validPaymentDates[$currentMonth])) {
             foreach ($validPaymentDates[$currentMonth] as $validDate) {
                 $validDateTime = new DateTime($validDate);
-                if ($validDateTime >= $startDate) { // Ignorar fechas de corte pasadas
+                if ($validDateTime >= $currentDate) {
                     $dates[] = $validDateTime;
                     $currentDate = clone $validDateTime;
                     $currentDate->modify('+1 day');
