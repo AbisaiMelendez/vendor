@@ -162,7 +162,6 @@ function saveInstallments($idbatch, $total, $installmentsCount)
 // estos son un viernes si y un viernes no.
 
 
-
 function calculatePaymentDates($installmentsCount, $purchaseDate)
 {
     $dates = [];
@@ -218,7 +217,9 @@ function calculatePaymentDates($installmentsCount, $purchaseDate)
                 $validDateTime = new DateTime($validDate);
                 if ($validDateTime > $lastDate) { // Fechas posteriores a la última seleccionada
                     $dates[] = $validDateTime;
-                    break;
+                    if (count($dates) >= $installmentsCount) {
+                        break 2; // Salir si ya alcanzamos el número requerido
+                    }
                 }
             }
         }
@@ -229,14 +230,18 @@ function calculatePaymentDates($installmentsCount, $purchaseDate)
             $nextMonthKey = $nextMonth->format('Y-m');
 
             if (isset($predefinedPaymentDates[$nextMonthKey])) {
-                $dates[] = new DateTime($predefinedPaymentDates[$nextMonthKey][0]);
+                foreach ($predefinedPaymentDates[$nextMonthKey] as $validDate) {
+                    $dates[] = new DateTime($validDate);
+                    if (count($dates) >= $installmentsCount) {
+                        break 2; // Salir si ya alcanzamos el número requerido
+                    }
+                }
             }
         }
     }
 
     return $dates;
 }
-
 
 // Datos de ejemplo
 $data = $_POST;
