@@ -181,10 +181,15 @@ function calculatePaymentDates($installmentsCount, $startDate)
             $lastDayOfMonth = (clone $firstDayOfMonth)->modify('last day of this month');
 
             $currentDay = clone $firstDayOfMonth;
+
+            // Avanzar hasta el primer viernes del mes
+            while ($currentDay->format('N') != 5) {
+                $currentDay->modify('+1 day');
+            }
+
+            // Agregar todos los viernes del mes
             while ($currentDay <= $lastDayOfMonth) {
-                if ($currentDay->format('N') == 5) { // N=5 es viernes
-                    $validPaymentDates["$year-$monthStr"][] = $currentDay->format('Y-m-d');
-                }
+                $validPaymentDates["$year-$monthStr"][] = $currentDay->format('Y-m-d');
                 $currentDay->modify('+7 days'); // Saltar directamente al siguiente viernes
             }
         }
