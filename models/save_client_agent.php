@@ -206,7 +206,7 @@ function calculatePaymentDates($installmentsCount, $startDate)
         if (isset($validPaymentDates[$currentMonth])) {
             foreach ($validPaymentDates[$currentMonth] as $validDate) {
                 $validDateTime = new DateTime($validDate);
-                if ($validDateTime > $startDate) { // Ignorar fechas de corte pasadas o actuales
+                if ($validDateTime > $currentDate) { // Ignorar fechas de corte pasadas o actuales
                     $dates[] = $validDateTime;
                     $currentDate = clone $validDateTime;
                     $currentDate->modify('+1 day');
@@ -227,6 +227,7 @@ function calculatePaymentDates($installmentsCount, $startDate)
 
     return $dates;
 }
+
 
 
 
