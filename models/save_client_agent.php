@@ -161,13 +161,15 @@ function saveInstallments($idbatch, $total, $installmentsCount)
 
 // estos son un viernes si y un viernes no.
 
+
+
 function calculatePaymentDates($installmentsCount, $startDate)
 {
     $dates = [];
     $currentDate = clone $startDate;
 
     // Generar dinámicamente las fechas válidas de pago
-    function generateValidPaymentDates($year, $startDate)
+    function generateValidPaymentDates($year)
     {
         $validPaymentDates = [];
 
@@ -182,10 +184,7 @@ function calculatePaymentDates($installmentsCount, $startDate)
             $currentDay = clone $firstDayOfMonth;
             while ($currentDay <= $lastDayOfMonth) {
                 if ($currentDay->format('N') == 5) { // N=5 es viernes
-                    // Incluir solo los viernes válidos a partir del primer viernes posterior al inicio
-                    if ($currentDay >= $startDate) {
-                        $validPaymentDates["$year-$monthStr"][] = $currentDay->format('Y-m-d');
-                    }
+                    $validPaymentDates["$year-$monthStr"][] = $currentDay->format('Y-m-d');
                 }
                 $currentDay->modify('+7 days'); // Saltar directamente al siguiente viernes
             }
@@ -195,7 +194,7 @@ function calculatePaymentDates($installmentsCount, $startDate)
     }
 
     $year = $startDate->format('Y');
-    $validPaymentDates = generateValidPaymentDates($year, $startDate);
+    $validPaymentDates = generateValidPaymentDates($year);
 
     for ($i = 0; $i < $installmentsCount; $i++) {
         $currentMonth = $currentDate->format('Y-m');
@@ -203,7 +202,7 @@ function calculatePaymentDates($installmentsCount, $startDate)
         if (isset($validPaymentDates[$currentMonth])) {
             foreach ($validPaymentDates[$currentMonth] as $validDate) {
                 $validDateTime = new DateTime($validDate);
-                if ($validDateTime >= $currentDate) {
+                if ($validDateTime >= $startDate) { // Ignorar fechas de corte pasadas
                     $dates[] = $validDateTime;
                     $currentDate = clone $validDateTime;
                     $currentDate->modify('+1 day');
@@ -224,6 +223,7 @@ function calculatePaymentDates($installmentsCount, $startDate)
 
     return $dates;
 }
+
 
 
 // Datos de ejemplo
