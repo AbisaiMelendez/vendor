@@ -162,73 +162,80 @@ function saveInstallments($idbatch, $total, $installmentsCount)
 // estos son un viernes si y un viernes no.
 
 
-function calculatePaymentDates($installmentsCount, $startDate)
+
+function calculatePaymentDates($installmentsCount, $purchaseDate)
 {
     $dates = [];
-    $currentDate = clone $startDate;
 
-    // Generar dinámicamente las fechas válidas de pago
-    function generateValidPaymentDates($year)
+    // Generar fechas dinámicamente según los viernes específicos del calendario
+    function generatePredefinedPaymentDates($year)
     {
-        $validPaymentDates = [];
+        $predefinedPaymentDates = [
+            '2025-01' => ['2025-01-10', '2025-01-24'],
+            '2025-02' => ['2025-02-07', '2025-02-21'],
+            '2025-03' => ['2025-03-07', '2025-03-21'],
+            '2025-04' => ['2025-04-04', '2025-04-18'],
+            '2025-05' => ['2025-05-02', '2025-05-16', '2025-05-30'],
+            '2025-06' => ['2025-06-13', '2025-06-27'],
+            '2025-07' => ['2025-07-11', '2025-07-25'],
+            '2025-08' => ['2025-08-08', '2025-08-22'],
+            '2025-09' => ['2025-09-05', '2025-09-19'],
+            '2025-10' => ['2025-10-03', '2025-10-17', '2025-10-31'],
+            '2025-11' => ['2025-11-14', '2025-11-28'],
+            '2025-12' => ['2025-12-12', '2025-12-26'],
+        ];
 
-        // Generar fechas para cada mes del año
-        for ($month = 1; $month <= 12; $month++) {
-            $monthStr = str_pad($month, 2, '0', STR_PAD_LEFT); // Asegurar formato MM
-
-            // Encontrar todos los viernes del mes
-            $firstDayOfMonth = new DateTime("$year-$monthStr-01");
-            $lastDayOfMonth = (clone $firstDayOfMonth)->modify('last day of this month');
-
-            $currentDay = clone $firstDayOfMonth;
-
-            // Avanzar hasta el primer viernes del mes
-            while ($currentDay->format('N') != 5) {
-                $currentDay->modify('+1 day');
-            }
-
-            // Agregar todos los viernes del mes
-            while ($currentDay <= $lastDayOfMonth) {
-                $validPaymentDates["$year-$monthStr"][] = $currentDay->format('Y-m-d');
-                $currentDay->modify('+7 days'); // Saltar directamente al siguiente viernes
-            }
-        }
-
-        return $validPaymentDates;
+        return $predefinedPaymentDates;
     }
 
-    $year = $startDate->format('Y');
-    $validPaymentDates = generateValidPaymentDates($year);
+    $year = $purchaseDate->format('Y');
+    $predefinedPaymentDates = generatePredefinedPaymentDates($year);
 
-    for ($i = 0; $i < $installmentsCount; $i++) {
-        $currentMonth = $currentDate->format('Y-m');
+    // Encontrar la primera fecha de corte válida
+    $foundStart = false;
+    foreach ($predefinedPaymentDates as $month => $datesInMonth) {
+        foreach ($datesInMonth as $validDate) {
+            $validDateTime = new DateTime($validDate);
+            if ($validDateTime >= $purchaseDate) {
+                $dates[] = $validDateTime;
+                $foundStart = true;
+                break 2; // Salir cuando encontremos la primera fecha válida
+            }
+        }
+    }
 
-        if (isset($validPaymentDates[$currentMonth])) {
-            foreach ($validPaymentDates[$currentMonth] as $validDate) {
+    if (!$foundStart) {
+        return $dates; // No hay fechas válidas después de la fecha de compra
+    }
+
+    // Generar las siguientes cuotas hasta completar el número requerido
+    while (count($dates) < $installmentsCount) {
+        $lastDate = end($dates);
+        $currentMonth = $lastDate->format('Y-m');
+
+        if (isset($predefinedPaymentDates[$currentMonth])) {
+            foreach ($predefinedPaymentDates[$currentMonth] as $validDate) {
                 $validDateTime = new DateTime($validDate);
-                if ($validDateTime > $currentDate) { // Ignorar fechas de corte pasadas o actuales
+                if ($validDateTime > $lastDate) { // Fechas posteriores a la última seleccionada
                     $dates[] = $validDateTime;
-                    $currentDate = clone $validDateTime;
-                    $currentDate->modify('+1 day');
                     break;
                 }
             }
         }
 
-        // Si no hay más fechas válidas en el mes, avanzar al siguiente mes
-        if (count($dates) < $i + 1) {
-            $currentDate->modify('first day of next month');
-            while (!isset($validPaymentDates[$currentDate->format('Y-m')])) {
-                $currentDate->modify('first day of next month');
+        // Si no encontramos más fechas en el mes actual, avanzar al siguiente mes
+        if (count($dates) < $installmentsCount) {
+            $nextMonth = (new DateTime($lastDate->format('Y-m-01')))->modify('+1 month');
+            $nextMonthKey = $nextMonth->format('Y-m');
+
+            if (isset($predefinedPaymentDates[$nextMonthKey])) {
+                $dates[] = new DateTime($predefinedPaymentDates[$nextMonthKey][0]);
             }
-            $currentDate = new DateTime($validPaymentDates[$currentDate->format('Y-m')][0]);
         }
     }
 
     return $dates;
 }
-
-
 
 
 // Datos de ejemplo
