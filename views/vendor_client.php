@@ -288,7 +288,7 @@ $employeeJson = json_encode($dataEmployee);
                 const rawDataCompany = <?php echo json_encode($dataBill, JSON_HEX_TAG | JSON_HEX_APOS | JSON_HEX_QUOT | JSON_HEX_AMP); ?>;
                 const rawDataCredit = <?php echo json_encode($dataCredit, JSON_HEX_TAG | JSON_HEX_APOS | JSON_HEX_QUOT | JSON_HEX_AMP); ?>;
 
-                const url = 'https://hr-surge.com/app/public/documents/photo/';
+                const url = 'https://hr-surgepays.com/app/public/documents/photo/';
 
 
 
@@ -348,7 +348,7 @@ $employeeJson = json_encode($dataEmployee);
 
                     const photoField = document.getElementById('foto');
                     if (photoField) {
-                        const photoUrl = `http://hr-surge.com/app/public/documents/photo/${employee.photo}`;
+                        const photoUrl = `http://hr-surgepays.com/app/public/documents/photo/${employee.photo}`;
                         photoField.src = employee.photo ? photoUrl : 'https://static.vecteezy.com/system/resources/previews/008/442/086/non_2x/illustration-of-human-icon-user-symbol-icon-modern-design-on-blank-background-free-vector.jpg';
                     }
 
