@@ -123,6 +123,9 @@ function saveInstallments($idbatch, $total, $installmentsCount)
 
     $dates = calculatePaymentDates($installmentsCount, $today);
 
+    $installmentDetails = ""; // Inicializar detalles de cuotas para el correo
+
+
     foreach ($dates as $i => $dueDate) {
         $stmt = $mysqli->prepare(
             "INSERT INTO installments (idbatch, installment_number, amount, due_date, paid, payment_date) 
@@ -135,9 +138,55 @@ function saveInstallments($idbatch, $total, $installmentsCount)
         $stmt->bind_param("sidsi", $idbatch, $installmentNumber, $installmentAmount, $formattedDate, $paid);
         $stmt->execute();
         $stmt->close();
+
+
+        // Agregar detalles de cada cuota al texto del correo
+        $installmentDetails .= "Cuota " . ($i + 1) . ": $" . number_format($installmentAmount, 2) . " con vencimiento el " . $formattedDate . "\n";
     }
 
     echo "Cuotas guardadas correctamente.";
+
+      // Enviar correo con los detalles de las cuotas
+      sendInstallmentsEmail($idbatch, $total, $installmentsCount, $installmentDetails);
+}
+
+
+function sendInstallmentsEmail($idbatch, $total, $installmentsCount, $installmentDetails)
+{
+    try {
+        $mail = new PHPMailer(true);
+
+        // Configuración del servidor SMTP
+        $mail->isSMTP();
+        $mail->Host = 'smtp.office365.com'; // Cambiar según tu servidor SMTP
+        $mail->SMTPAuth = true;
+        $mail->Username = 'vendor-noreply@surgepays.sv';
+        $mail->Password = 'D.460087689989az';
+        $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
+        $mail->Port = 587;
+
+        // Configuración del correo
+        $mail->setFrom('vendor-noreply@surgepays.sv', 'TEST vendor');
+        $mail->addAddress('it@surgepays.sv');
+
+        // Agregar destinatarios como copia (CC)
+        $mail->addCC('etrejo@surgepays.com');
+        $mail->addCC('jsegovia@surgepays.sv');
+
+        // Asunto y cuerpo del correo
+        $mail->Subject = 'Detalles de las cuotas de pago';
+        $mail->Body = "ID del batch: $idbatch\n"
+                    . "Total: $" . number_format($total, 2) . "\n"
+                    . "Número de cuotas: $installmentsCount\n\n"
+                    . "Detalles de las cuotas:\n"
+                    . $installmentDetails;
+
+        // Enviar correo
+        $mail->send();
+        echo 'Correo con las cuotas enviado correctamente.';
+    } catch (Exception $e) {
+        echo "Error al enviar correo: {$mail->ErrorInfo}";
+    }
 }
 
 // // estas fechas son segun quincenan antepenultimo dia del mes
