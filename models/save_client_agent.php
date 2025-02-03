@@ -286,7 +286,7 @@ try {
 
 
     $mail->Subject = 'Prueba de PHPMailer';
-    $mail->Body = 'Este es un mensaje de prueba enviado con PHPMailer.' . $data['nameVendor'];
+    $mail->Body = 'Este es un mensaje de prueba enviado con PHPMailer.' . $data['nameVendor'] . 'dates' . $dates;
 
     // Enviar correo
     $mail->send();
