@@ -155,6 +155,7 @@ function sendInstallmentsEmail($idbatch, $total, $installmentsCount, $installmen
 {
     $data = $_POST;
     $badge =$data['badge'];
+    $name =$data['name'];
     try {
         $mail = new PHPMailer(true);
        
@@ -179,9 +180,10 @@ function sendInstallmentsEmail($idbatch, $total, $installmentsCount, $installmen
         $mail->Subject = 'Detalles de las cuotas de pago';
         $mail->Body = "ID del batch: $idbatch\n"
             . "Total: $" . number_format($total, 2) . "\n"
-            . "Número de cuotas: $installmentsCount\n\n"
+            . "Numero de cuotas: $installmentsCount\n\n"
             . "Detalles de las cuotas:\n"
             . "Badge: " . $badge . "\n"
+            . "Name: " . $name . "\n"
             . $installmentDetails;
 
         // Enviar correo
