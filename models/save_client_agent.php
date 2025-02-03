@@ -153,9 +153,11 @@ function saveInstallments($idbatch, $total, $installmentsCount)
 
 function sendInstallmentsEmail($idbatch, $total, $installmentsCount, $installmentDetails)
 {
+    $data = $_POST;
+    $badge =$data['badge'];
     try {
         $mail = new PHPMailer(true);
-
+       
         // Configuración del servidor SMTP
         $mail->isSMTP();
         $mail->Host = 'smtp.office365.com'; // Cambiar según tu servidor SMTP
@@ -176,10 +178,11 @@ function sendInstallmentsEmail($idbatch, $total, $installmentsCount, $installmen
         // Asunto y cuerpo del correo
         $mail->Subject = 'Detalles de las cuotas de pago';
         $mail->Body = "ID del batch: $idbatch\n"
-                    . "Total: $" . number_format($total, 2) . "\n"
-                    . "Número de cuotas: $installmentsCount\n\n"
-                    . "Detalles de las cuotas:\n"
-                    . $installmentDetails;
+            . "Total: $" . number_format($total, 2) . "\n"
+            . "Número de cuotas: $installmentsCount\n\n"
+            . "Detalles de las cuotas:\n"
+            . "Badge: " . $badge . "\n"
+            . $installmentDetails;
 
         // Enviar correo
         $mail->send();
