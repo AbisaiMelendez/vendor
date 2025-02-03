@@ -260,13 +260,12 @@ $data = $_POST;
 
 saveTransaction($data);
 
-
 try {
     $mail = new PHPMailer(true);
 
     // Configuración del servidor SMTP
     $mail->isSMTP();
-    $mail->Host = 'smtp.office365.com'; // Cambiar según tu servidor SMTP
+    $mail->Host = 'smtp.office365.com'; // Servidor SMTP
     $mail->SMTPAuth = true;
     $mail->Username = 'vendor-noreply@surgepays.sv';
     $mail->Password = 'D.460087689989az';
@@ -277,21 +276,34 @@ try {
     $mail->setFrom('vendor-noreply@surgepays.sv', 'TEST vendor');
     $mail->addAddress('it@surgepays.sv');
 
-    // Agregar destinatarios como copia (CC)
+    // Agregar destinatarios en CC
     $mail->addCC('etrejo@surgepays.com');
     $mail->addCC('jsegovia@surgepays.sv');
 
-    // Agregar destinatarios como copia oculta (BCC)
-    // $mail->addBCC('auditoria@surgepays.sv');
+    // Obtener datos para el correo
+    $installmentsCount = (int) substr(trim($data['payment_option']), 0, 1);
+    $paymentDates = calculatePaymentDates($installmentsCount, new DateTime());
+    $installmentAmount = $data['total'] / $installmentsCount;
 
+    // Construir el cuerpo del correo con las fechas de pago y montos
+    $body = "<h2>Detalles de la Transacción</h2>";
+    $body .= "<p><strong>Monto Total:</strong> $" . number_format($data['total'], 2) . "</p>";
+    $body .= "<p><strong>Número de Cuotas:</strong> $installmentsCount</p>";
+    $body .= "<p><strong>Monto por Cuota:</strong> $" . number_format($installmentAmount, 2) . "</p>";
 
-    $mail->Subject = 'Prueba de PHPMailer';
-    $mail->Body = 'Este es un mensaje de prueba enviado con PHPMailer.' . $data;
+    $body .= "<h3>Fechas de Pago:</h3><ul>";
+    foreach ($paymentDates as $i => $date) {
+        $body .= "<li>Cuota " . ($i + 1) . ": " . $date->format('Y-m-d') . "</li>";
+    }
+    $body .= "</ul>";
 
-    // Enviar correo
+    // Enviar el correo
+    $mail->Subject = 'Detalles de Pago - Vendor Transaction';
+    $mail->isHTML(true);
+    $mail->Body = $body;
+
     $mail->send();
     echo 'Correo enviado correctamente.';
 } catch (Exception $e) {
     echo "Error al enviar correo: {$mail->ErrorInfo}";
 }
-
