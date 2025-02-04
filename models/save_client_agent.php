@@ -211,7 +211,7 @@ function sendInstallmentsEmail($idbatch, $total, $installmentsCount, $installmen
                 <table style='width: 100%; border-collapse: collapse;'>
                     <thead>
                         <tr style='background-color: #007bff; color: white;'>
-                            <th style='padding: 10px; border: 1px solid #ddd;'>Número de Cuota</th>
+                            <th style='padding: 10px; border: 1px solid #ddd;'>Numero de Cuota</th>
                             <th style='padding: 10px; border: 1px solid #ddd;'>Monto</th>
                             <th style='padding: 10px; border: 1px solid #ddd;'>Fecha de Vencimiento</th>
                         </tr>
