@@ -160,7 +160,7 @@ function sendInstallmentsEmail($idbatch, $total, $installmentsCount, $installmen
     $name = $data['name'];
     $product = $data['product'];
     $quantity = $data['quantity'];
-    $company = $data['company'];
+    $company = $data['nameVendor'];
     $price = $data['price'];
 
     try {
