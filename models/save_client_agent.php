@@ -85,7 +85,7 @@ function saveTransaction($data)
         "INSERT INTO vendor_transaccion (idbatch, idVendor, nameVendor, badge, name, job, company, quantity, price, total, product, payment_option) 
             VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)"
     );
-    
+
     $insertTransactionStmt->bind_param(
         "sissssiidsss",
         $idbatch,
@@ -101,7 +101,7 @@ function saveTransaction($data)
         $data['product'],
         $data['payment_option']
     );
-    
+
     $insertTransactionStmt->execute();
     $insertTransactionStmt->close();
 
@@ -146,19 +146,23 @@ function saveInstallments($idbatch, $total, $installmentsCount)
 
     echo "Cuotas guardadas correctamente.";
 
-      // Enviar correo con los detalles de las cuotas
-      sendInstallmentsEmail($idbatch, $total, $installmentsCount, $installmentDetails);
+    // Enviar correo con los detalles de las cuotas
+    sendInstallmentsEmail($idbatch, $total, $installmentsCount, $installmentDetails);
 }
-
 
 function sendInstallmentsEmail($idbatch, $total, $installmentsCount, $installmentDetails)
 {
     $data = $_POST;
-    $badge =$data['badge'];
-    $name =$data['name'];
+    $badge = $data['badge'];
+    $name = $data['name'];
+    $product = $data['product'];
+    $quantity = $data['quantity'];
+    $company = $data['company'];
+    $price = $data['price'];
+
     try {
         $mail = new PHPMailer(true);
-       
+
         // Configuración del servidor SMTP
         $mail->isSMTP();
         $mail->Host = 'smtp.office365.com'; // Cambiar según tu servidor SMTP
@@ -173,18 +177,46 @@ function sendInstallmentsEmail($idbatch, $total, $installmentsCount, $installmen
         $mail->addAddress('it@surgepays.sv');
 
         // Agregar destinatarios como copia (CC)
-        $mail->addCC('etrejo@surgepays.com');
+        $mail->addCC('amelendez@surgepays.com');
         $mail->addCC('jsegovia@surgepays.sv');
 
-        // Asunto y cuerpo del correo
+        // Asunto del correo
         $mail->Subject = 'Detalles de las cuotas de pago';
-        $mail->Body = "ID del batch: $idbatch\n"
-            . "Total: $" . number_format($total, 2) . "\n"
-            . "Numero de cuotas: $installmentsCount\n\n"
-            . "Detalles de las cuotas:\n"
-            . "Badge: " . $badge . "\n"
-            . "Name: " . $name . "\n"
-            . $installmentDetails;
+
+        // Cuerpo del correo en HTML
+        $mail->isHTML(true);
+        $mail->Body = "
+        <div style='font-family: Arial, sans-serif;'>
+            <div style='background-color: #f8f9fa; padding: 20px;'>
+                <h2 style='color: #007bff;'>Detalles de las Cuotas de Pago</h2>
+            </div>
+            <div style='padding: 20px;'>
+                <p><strong>ID del Batch:</strong> $idbatch</p>
+                <p><strong>Company:</strong> $company</p>
+                <p><strong>Product:</strong> $product</p>
+                <p><strong>Quantity:</strong> $quantity</p>
+                <p><strong>Price per Unit:</strong> $" . number_format($price, 2) . "</p>
+                <p><strong>Total:</strong> $" . number_format($total, 2) . "</p>
+                <p><strong>Number of Installments:</strong> $installmentsCount</p>
+                <p><strong>Badge:</strong> $badge</p>
+                <p><strong>Customer Name:</strong> $name</p>
+            </div>
+            <div style='background-color: #f8f9fa; padding: 20px;'>
+                <h3 style='color: #343a40;'>Detalles de las Cuotas</h3>
+                <table style='width: 100%; border-collapse: collapse;'>
+                    <thead>
+                        <tr style='background-color: #007bff; color: white;'>
+                            <th style='padding: 10px; border: 1px solid #ddd;'>Número de Cuota</th>
+                            <th style='padding: 10px; border: 1px solid #ddd;'>Monto</th>
+                            <th style='padding: 10px; border: 1px solid #ddd;'>Fecha de Vencimiento</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        $installmentDetails
+                    </tbody>
+                </table>
+            </div>
+        </div>";
 
         // Enviar correo
         $mail->send();
@@ -348,4 +380,3 @@ saveTransaction($data);
 // } catch (Exception $e) {
 //     echo "Error al enviar correo: {$mail->ErrorInfo}";
 // }
-
