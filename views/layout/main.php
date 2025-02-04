@@ -13,6 +13,7 @@ include '../vendor/models/notificacions.php';
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' fill='%23008000'/><path d='M20 50 L40 70 L80 30' stroke='%23FFFFFF' stroke-width='10' fill='none' stroke-linecap='round' stroke-linejoin='round'/></svg>">
 
     <style>
         button {
