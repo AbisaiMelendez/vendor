@@ -269,6 +269,7 @@ $employeeJson = json_encode($dataEmployee);
 
             <input type="text" name="idVendor" value="<?php echo $idVendor; ?>" hidden>
             <input type="text" name="nameVendor" value="<?php echo $nameVendor; ?>" hidden>
+            <input type="text" name="correoAgent" id='correoAgent' value="" hidden>
             <button class="bg-green-500 hover:bg-green-700 mt-8" type="submit">Registrar Venta</button>
         </form>
     </main>
@@ -311,6 +312,7 @@ $employeeJson = json_encode($dataEmployee);
                 const priceInput = document.getElementById('price');
                 const totalInput = document.getElementById('total');
                 const paymentOptions = document.querySelectorAll('input[name="payment_option"]');
+                const emailAgent = document.getElementById('correoAgent');
 
 
 
@@ -323,6 +325,7 @@ $employeeJson = json_encode($dataEmployee);
                     priceInput.value = '';
                     totalInput.value = '';
                     paymentOptions.value = '';
+                    emailAgent.value = '';
 
                     // Validar y actualizar los campos del formulario
                     const nameField = document.getElementById('name');
@@ -357,6 +360,10 @@ $employeeJson = json_encode($dataEmployee);
                     if (emailField) emailField.value = employee.personalEmail || 'No disponible';
 
 
+                    const correoField = document.getElementById('correoAgent');
+                    if (correoField) correoField.value = employee.personalEmail || 'No disponible';
+
+     
                     const totalCreditoField = document.getElementById('total_credito');
 
                     if (totalCreditoField && employee && employee.badge) {
@@ -369,7 +376,6 @@ $employeeJson = json_encode($dataEmployee);
                         // Mostrar el crédito en el campo
                         totalCreditoField.innerHTML = `$${totalCredito}`;
                     }
-
                 } else {
 
                     const photoField = document.getElementById('foto');

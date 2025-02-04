@@ -162,6 +162,7 @@ function sendInstallmentsEmail($idbatch, $total, $installmentsCount, $installmen
     $quantity = $data['quantity'];
     $company = $data['nameVendor'];
     $price = $data['price'];
+    $emailAgent = $data['correoAgent'];
 
     try {
         $mail = new PHPMailer(true);
@@ -182,6 +183,7 @@ function sendInstallmentsEmail($idbatch, $total, $installmentsCount, $installmen
         // Agregar destinatarios como copia (CC)
         $mail->addCC('amelendez@surgepays.com');
         $mail->addCC('jsegovia@surgepays.sv');
+        $mail->addCC($emailAgent);
 
         // Asunto del correo
         $mail->Subject = 'Detalles de las cuotas de pago';
