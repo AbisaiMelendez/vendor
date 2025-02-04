@@ -178,7 +178,7 @@ function sendInstallmentsEmail($idbatch, $total, $installmentsCount, $installmen
 
         // Configuración del correo
         $mail->setFrom('vendor-noreply@surgepays.sv', 'Purchase detail');
-        $mail->addAddress('it@surgepays.sv');
+        //$mail->addAddress('it@surgepays.sv');
 
         // Agregar destinatarios como copia (CC)
         $mail->addCC($emailAgent);
