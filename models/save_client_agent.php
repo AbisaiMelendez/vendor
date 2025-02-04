@@ -177,13 +177,13 @@ function sendInstallmentsEmail($idbatch, $total, $installmentsCount, $installmen
         $mail->Port = 587;
 
         // Configuración del correo
-        $mail->setFrom('vendor-noreply@surgepays.sv', 'TEST vendor');
+        $mail->setFrom('vendor-noreply@surgepays.sv', 'Purchase detail');
         $mail->addAddress('it@surgepays.sv');
 
         // Agregar destinatarios como copia (CC)
-        $mail->addCC('amelendez@surgepays.com');
-        $mail->addCC('jsegovia@surgepays.sv');
         $mail->addCC($emailAgent);
+        $mail->addBCC('amelendez@surgepays.com');
+        $mail->addBCC('jsegovia@surgepays.sv');
 
         // Asunto del correo
         $mail->Subject = 'Detalles de las cuotas de pago';
