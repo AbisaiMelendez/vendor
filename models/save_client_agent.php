@@ -125,7 +125,6 @@ function saveInstallments($idbatch, $total, $installmentsCount)
 
     $installmentDetails = ""; // Inicializar detalles de cuotas para el correo
 
-
     foreach ($dates as $i => $dueDate) {
         $stmt = $mysqli->prepare(
             "INSERT INTO installments (idbatch, installment_number, amount, due_date, paid, payment_date) 
@@ -139,9 +138,13 @@ function saveInstallments($idbatch, $total, $installmentsCount)
         $stmt->execute();
         $stmt->close();
 
-
-        // Agregar detalles de cada cuota al texto del correo
-        $installmentDetails .= "Cuota " . ($i + 1) . ": $" . number_format($installmentAmount, 2) . " con vencimiento el " . $formattedDate . "\n";
+        // Generar detalles en formato HTML para la tabla
+        $installmentDetails .= "
+        <tr>
+            <td style='padding: 10px; border: 1px solid #ddd;'>$installmentNumber</td>
+            <td style='padding: 10px; border: 1px solid #ddd;'>$" . number_format($installmentAmount, 2) . "</td>
+            <td style='padding: 10px; border: 1px solid #ddd;'>$formattedDate</td>
+        </tr>";
     }
 
     echo "Cuotas guardadas correctamente.";
