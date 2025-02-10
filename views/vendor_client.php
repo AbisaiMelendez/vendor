@@ -183,11 +183,18 @@ $employeeJson = json_encode($dataEmployee);
                     <label class="text-5xl font-semibold text-gray-700" id="total_credito" name="total_credito">$0.00</label>
                 </div>
             </div>
-            <h2>Buscar Badge</h2>
-            <div class="form-group">
-                <label for="badge">Badge</label>
-                <input type="text" id="badge" name="badge" placeholder="Badge" required oninput="">
+            <!-- <h2>Buscar Badge</h2> -->
+            <div class="form-group" style="display: flex; align-items: center;">
+                <label for="badge" style="margin-right: 10px;">Badge</label>
+                <input type="text" id="badge" name="badge" placeholder="Badge" required oninput="" style="flex-grow: 1; margin-right: 10px; padding: 5px;">
+                <button id='buscarBtn'
+                    style="padding: 5px 10px; font-size: 14px; cursor: pointer; border: 2px solid blue; color: blue; background-color: transparent; transition: 0.3s;"
+                    onmouseover="this.style.backgroundColor='blue'; this.style.color='white';"
+                    onmouseout="this.style.backgroundColor='transparent'; this.style.color='blue';" onclick="">
+                    Buscar
+                </button>
             </div>
+
             <div class="form-group">
                 <label for="name">Nombre completo</label>
                 <input type="text" id="name" name="name" placeholder="Nombre completo" required readonly>
@@ -363,7 +370,7 @@ $employeeJson = json_encode($dataEmployee);
                     const correoField = document.getElementById('correoAgent');
                     if (correoField) correoField.value = employee.personalEmail || 'No disponible';
 
-     
+
                     const totalCreditoField = document.getElementById('total_credito');
 
                     if (totalCreditoField && employee && employee.badge) {
@@ -417,6 +424,122 @@ $employeeJson = json_encode($dataEmployee);
     });
 
 
+    //buscando al emeplado por el boton
+    function buscarEmpleado() {
+        try {
+            // Obteniendo los datos de empleados desde PHP
+            const rawDataEmployee = <?php echo json_encode($dataEmployee, JSON_HEX_TAG | JSON_HEX_APOS | JSON_HEX_QUOT | JSON_HEX_AMP); ?>;
+            const rawDataPosition = <?php echo json_encode($dataPositions, JSON_HEX_TAG | JSON_HEX_APOS | JSON_HEX_QUOT | JSON_HEX_AMP); ?>;
+            const rawDataCompany = <?php echo json_encode($dataBill, JSON_HEX_TAG | JSON_HEX_APOS | JSON_HEX_QUOT | JSON_HEX_AMP); ?>;
+            const rawDataCredit = <?php echo json_encode($dataCredit, JSON_HEX_TAG | JSON_HEX_APOS | JSON_HEX_QUOT | JSON_HEX_AMP); ?>;
+
+            // Convertir el string JSON a un array de objetos
+            const dataPositions = JSON.parse(rawDataPosition);
+            const dataEmployee = JSON.parse(rawDataEmployee);
+            const dataCompany = JSON.parse(rawDataCompany);
+            const dataCredit = JSON.parse(rawDataCredit);
+
+            const badgeInput = document.getElementById('badge');
+            const badge = badgeInput.value.trim();
+
+            if (!badge) {
+                Swal.fire({
+                    icon: 'warning',
+                    title: 'Campo vacío',
+                    text: 'Por favor, ingrese un número de badge.',
+                    confirmButtonText: 'Entendido',
+                    timer: 3000
+                });
+                return;
+            }
+
+            const employee = dataEmployee.find(emp => emp.badge === badge && emp.status === 1);
+
+            const quantityInput = document.getElementById('quantity');
+            const priceInput = document.getElementById('price');
+            const totalInput = document.getElementById('total');
+            const emailAgent = document.getElementById('correoAgent');
+
+            if (employee) {
+                // Construir el nombre completo
+                const fullName = `${employee.firstName || ''} ${employee.secondName || ''} ${employee.firstLastName || ''} ${employee.secondLastName || ''}`.trim();
+
+                // Resetear los inputs
+                quantityInput.value = '';
+                priceInput.value = '';
+                totalInput.value = '';
+                emailAgent.value = '';
+
+                // Actualizar campos del formulario
+                const nameField = document.getElementById('name');
+                if (nameField) nameField.value = fullName || 'No disponible';
+
+                const jobField = document.getElementById('job');
+                if (jobField) {
+                    const position = dataPositions.find(pos => pos.positionId === employee.positionId);
+                    jobField.value = position ? position.positionName : 'No disponible';
+                }
+
+                const companyField = document.getElementById('company');
+                if (companyField) {
+                    const company = dataCompany.find(bill => bill.billToId === employee.billTo);
+                    companyField.value = company ? company.billName : 'No disponible';
+                }
+
+                const photoField = document.getElementById('foto');
+                if (photoField) {
+                    const photoUrl = `http://hr-surgepays.com/app/public/documents/photo/${employee.photo}`;
+                    photoField.src = employee.photo ? photoUrl : 'https://static.vecteezy.com/system/resources/previews/008/442/086/non_2x/illustration-of-human-icon-user-symbol-icon-modern-design-on-blank-background-free-vector.jpg';
+                }
+
+                const emailField = document.getElementById('email');
+                if (emailField) emailField.value = employee.personalEmail || 'No disponible';
+
+                const correoField = document.getElementById('correoAgent');
+                if (correoField) correoField.value = employee.personalEmail || 'No disponible';
+
+                const totalCreditoField = document.getElementById('total_credito');
+                if (totalCreditoField && employee.badge) {
+                    const creditData = dataCredit.find(credit => credit.badge === employee.badge);
+                    const totalCredito = creditData ? creditData.current_credit : 100;
+                    totalCreditoField.innerHTML = `$${totalCredito}`;
+                }
+            } else {
+                const photoField = document.getElementById('foto');
+                photoField.src = 'http://static.vecteezy.com/system/resources/previews/008/442/086/non_2x/illustration-of-human-icon-user-symbol-icon-modern-design-on-blank-background-free-vector.jpg';
+
+                const totalCreditoField = document.getElementById('total_credito');
+                if (totalCreditoField) {
+                    totalCreditoField.innerHTML = "$0.00";
+                }
+
+                badgeInput.value = '';
+
+                Swal.fire({
+                    icon: 'warning',
+                    title: 'Usuario no encontrado',
+                    text: 'El usuario no está activo o no existe.',
+                    confirmButtonText: 'Entendido',
+                    timer: 3000
+                });
+            }
+        } catch (error) {
+            console.error('Error procesando dataEmployee:', error);
+
+            Swal.fire({
+                icon: 'error',
+                title: 'Error',
+                text: 'Hubo un problema al procesar la búsqueda. Inténtelo nuevamente.',
+                confirmButtonText: 'Entendido',
+                timer: 3000
+            });
+        }
+    }
+
+    // Asignar evento al botón "Buscar"
+    document.getElementById('buscarBtn').addEventListener('click', buscarEmpleado);
+
+
 
     //calculando el precio
     document.addEventListener('DOMContentLoaded', () => {
@@ -435,7 +558,7 @@ $employeeJson = json_encode($dataEmployee);
             const price = parseFloat(priceInput.value) || 0;
             const total = quantity * price;
             const vendorCondicional = parseInt(vendorIf.value);
-         
+
             // Obtener el crédito actual desde el campo total_credito
             const currentCredit = parseFloat(totalCreditoField ? totalCreditoField.textContent.replace('$', '').trim() : '0');
 
@@ -449,7 +572,7 @@ $employeeJson = json_encode($dataEmployee);
                     totalInput.value = '';
                     priceInput.value = '';
                     quantityInput.value = '';
-                     
+
                 } else if (total > currentCredit) {
                     Swal.fire({
                         icon: 'error',
