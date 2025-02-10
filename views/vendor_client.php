@@ -169,7 +169,7 @@ $employeeJson = json_encode($dataEmployee);
 
     <main class="mt-8">
         <form action="../vendor/models/save_client_agent.php" method="POST">
-            <div class="form-group bg-gray-100 shadow-xs rounded-xl p-5 flex items-center justify-between w-auto  bg-cover bg-center">
+            <div class="form-group bg-gray-100 shadow-xs rounded-xl p-5 flex items-center justify-between w-auto  bg-cover bg-center mb-4">
                 <!-- Imagen al lado izquierdo -->
                 <img
                     src="https://static.vecteezy.com/system/resources/previews/008/442/086/non_2x/illustration-of-human-icon-user-symbol-icon-modern-design-on-blank-background-free-vector.jpg"
@@ -184,7 +184,7 @@ $employeeJson = json_encode($dataEmployee);
                 </div>
             </div>
             <!-- <h2>Buscar Badge</h2> -->
-            <div class="form-group" style="display: flex; align-items: center;">
+            <div class="form-group mt-8" style="display: flex; align-items: center;" class="mt-4">
                 <label for="badge" style="margin-right: 10px;">Badge</label>
                 <input type="text" id="badge" name="badge" placeholder="Badge" required oninput="" style="flex-grow: 1; margin-right: 10px; padding: 5px;">
                 <button id='buscarBtn'
